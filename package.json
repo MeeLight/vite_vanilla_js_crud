@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "sass:build": "sass --watch ./src/sass:./statics/styles"
+    "sass:build": "sass --watch ./src/sass:./static/styles"
   },
   "devDependencies": {
     "prettier": "3.3.3",

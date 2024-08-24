@@ -30,9 +30,9 @@ src/sass/**/*.sass.map
 src/sass/**/*.scss.map
 
 # CSS
-statics/styles/*.map
-statics/styles/**/*.map
-statics/styles/**/.sass-cache/
+static/styles/*.map
+static/styles/**/*.map
+static/styles/**/.sass-cache/
 
 # Custom
 .env
