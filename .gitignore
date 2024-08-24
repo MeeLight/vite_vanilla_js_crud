@@ -30,7 +30,8 @@ src/sass/**/*.sass.map
 src/sass/**/*.scss.map
 
 # Css
-public/styles/**/*.map
+static/styles/*.map
+static/styles/**/*.map
 
 # Custom
 .env
