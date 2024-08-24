@@ -1,0 +1,11 @@
+@import 'partials/variables';
+@import 'partials/reset';
+
+:root {
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  background-color: $dark;
+  color: $light;
+  height: 100dvh;
+  width: 100dvw;
+}

@@ -1,0 +1,18 @@
+{
+  "name": "vite_vanilla_js_crud",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "sass:build": "sass --watch ./src/sass:./static/styles"
+  },
+  "devDependencies": {
+    "prettier": "3.3.3",
+    "sass": "1.77.6",
+    "vite": "5.4.1"
+  }
+}
