@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "usernamehw.errorlens",
+    "xabikos.javascriptsnippets",
+    "esbenp.prettier-vscode",
+    "syler.sass-indented"
+  ]
+}
