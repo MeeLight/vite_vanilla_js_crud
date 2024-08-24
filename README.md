@@ -13,7 +13,7 @@
 - Vite (v5.4.1)
 - Sass (v1.77.6)
 
-## Preview
+## Preview Mode
 [Deployed Page 🚀](https://vite_vanilla_js_crud_moises_reyes.sh)
 
 ## 🎯 Setup
