@@ -161,4 +161,8 @@ body {
   width: 100dvw;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /*# sourceMappingURL=main.css.map */
