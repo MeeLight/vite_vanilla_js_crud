@@ -1,7 +1,29 @@
 :is(.modal, .modal[open]) {
+  @media (max-width: 500px) {
+    width: 18rem;
+  }
+  @media (max-width: 420px) {
+    width: 14rem;
+  }
+  @media (max-width: 400px) {
+    width: 12rem;
+  }
+  @media (max-width: 350px) {
+    width: 12rem;
+  }
+  @media (max-width: 320px) {
+    width: 10rem;
+  }
+  @media (max-width: 300px) {
+    width: 8rem;
+  }
+  @media (max-width: 250px) {
+    width: 5rem;
+  }
+
   width: 22rem;
-  min-width: 15rem;
   overflow-y: auto;
+  overflow-x: hidden;
   outline: none;
   padding: 1.25rem 1.875rem;
   padding: 1.5rem 3rem;

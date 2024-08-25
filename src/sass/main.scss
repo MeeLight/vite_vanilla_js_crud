@@ -19,6 +19,13 @@
 .btn__modal {
   width: 30%;
   text-align: center;
+
+  @media (max-width: 420px) {
+    width: 14rem;
+  }
+  @media (max-width: 250px) {
+    width: 7.5rem;
+  }
 }
 
 :is(.btn__dark, .btn__gray, .btn__gray--outline, .btn--not_allowed) {
@@ -68,5 +75,9 @@
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
-  //outline: 1px solid black;
+
+  @media (max-width: 250px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }

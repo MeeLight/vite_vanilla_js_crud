@@ -201,8 +201,8 @@ body {
 
 :is(.modal, .modal[open]) {
   width: 22rem;
-  min-width: 15rem;
   overflow-y: auto;
+  overflow-x: hidden;
   outline: none;
   padding: 1.25rem 1.875rem;
   padding: 1.5rem 3rem;
@@ -217,6 +217,41 @@ body {
   gap: 1rem;
   inset: 0;
   margin: auto;
+}
+@media (max-width: 500px) {
+  :is(.modal, .modal[open]) {
+    width: 18rem;
+  }
+}
+@media (max-width: 420px) {
+  :is(.modal, .modal[open]) {
+    width: 14rem;
+  }
+}
+@media (max-width: 400px) {
+  :is(.modal, .modal[open]) {
+    width: 12rem;
+  }
+}
+@media (max-width: 350px) {
+  :is(.modal, .modal[open]) {
+    width: 12rem;
+  }
+}
+@media (max-width: 320px) {
+  :is(.modal, .modal[open]) {
+    width: 10rem;
+  }
+}
+@media (max-width: 300px) {
+  :is(.modal, .modal[open]) {
+    width: 8rem;
+  }
+}
+@media (max-width: 250px) {
+  :is(.modal, .modal[open]) {
+    width: 5rem;
+  }
 }
 
 .modal {
@@ -258,6 +293,16 @@ body {
 .btn__modal {
   width: 30%;
   text-align: center;
+}
+@media (max-width: 420px) {
+  .btn__modal {
+    width: 14rem;
+  }
+}
+@media (max-width: 250px) {
+  .btn__modal {
+    width: 7.5rem;
+  }
 }
 
 :is(.btn__dark, .btn__gray, .btn__gray--outline, .btn--not_allowed) {
@@ -305,6 +350,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
+}
+@media (max-width: 250px) {
+  .form__dialog {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */
