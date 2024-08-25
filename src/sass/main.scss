@@ -19,6 +19,10 @@
 .btn__modal {
   width: 30%;
   text-align: center;
+
+  @media (max-width: 420px) {
+    width: 14rem;
+  }
 }
 
 :is(.btn__dark, .btn__gray, .btn__gray--outline, .btn--not_allowed) {
