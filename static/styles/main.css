@@ -182,7 +182,24 @@ body {
   overflow-x: hidden;
 }
 
-:is(dialog, dialog[open]) {
+.btn {
+  text-transform: capitalize;
+  user-select: none;
+  padding: 0.4rem 1rem;
+  outline: 1px solid var(--dark);
+  border-radius: 0.2rem;
+  transition: background-color 500ms ease-in-out, color 500ms ease-in-out;
+}
+.btn:hover {
+  background-color: var(--dark);
+  color: var(--light);
+}
+
+.form {
+  display: flex;
+}
+
+:is(.modal, .modal[open]) {
   width: 22rem;
   min-width: 15rem;
   overflow-y: auto;
@@ -202,31 +219,34 @@ body {
   margin: auto;
 }
 
-dialog {
+.modal {
   scale: 0;
-  transition: scale 400ms ease, display 400ms ease allow-discrete;
+  translate: 0 30%;
+  transition: scale 400ms ease, translate 800ms ease, display 400ms ease allow-discrete;
 }
-dialog[open] {
+.modal[open] {
   scale: 1;
-  transition: scale 400ms ease-in-out;
+  translate: 0;
+  transition: scale 400ms ease-in-out, translate 800ms ease;
 }
 @starting-style {
-  dialog[open] {
+  .modal[open] {
     scale: 0;
+    translate: 0;
   }
 }
-dialog::-webkit-backdrop {
+.modal::-webkit-backdrop {
   background-color: rgba(0, 0, 0, 0.4);
   -webkit-backdrop-filter: blur(0.25rem);
   backdrop-filter: blur(0.25rem);
 }
-dialog::backdrop {
+.modal::backdrop {
   background-color: rgba(0, 0, 0, 0.4);
   -webkit-backdrop-filter: blur(0.25rem);
   backdrop-filter: blur(0.25rem);
 }
 
-main {
+.mainContent {
   padding: 2rem 0 0 2rem;
   display: flex;
   flex-direction: column;
@@ -235,31 +255,15 @@ main {
   gap: 1rem;
 }
 
-.btn {
-  text-transform: capitalize;
-  user-select: none;
-  padding: 0.4rem 1rem;
-  outline: 1px solid var(--dark);
-  border-radius: 0.2rem;
-  transition: background-color 500ms ease-in-out, color 500ms ease-in-out;
-}
-.btn:hover {
-  background-color: var(--dark);
-  color: var(--light);
+.btn__modal {
+  width: 30%;
+  text-align: center;
 }
 
-:is(.btn__dark, .btn__gray) {
+:is(.btn__dark, .btn__gray, .btn__gray--outline, .btn--not_allowed) {
   outline: none;
   transition: none;
   transition: background-color 500ms ease-in-out;
-}
-
-.btn__dark {
-  background-color: var(--dark);
-  color: var(--light);
-}
-.btn__dark:hover {
-  background-color: rgba(29, 30, 36, 0.8);
 }
 
 :is(.btn__gray, .btn--not_allowed) {
@@ -267,22 +271,37 @@ main {
   color: #e5e5e6;
 }
 :is(.btn__gray, .btn--not_allowed):hover {
-  background-color: #a1a1a8;
+  background-color: #a4a4a9;
   color: #e5e5e6;
+}
+
+.btn__dark {
+  background-color: var(--dark);
+  color: var(--light);
+}
+.btn__dark:hover {
+  background-color: #53535d;
+}
+
+.btn__gray--outline {
+  transition: none;
+  transition: opacity 600ms ease-in-out;
+  outline: 1px solid #7d7d83;
+  color: #7d7d83;
+}
+.btn__gray--outline:hover {
+  opacity: 0.8;
+  background-color: var(--light_bg);
+  color: #7d7d83;
 }
 
 .btn--not_allowed {
   cursor: not-allowed;
 }
 
-.form {
-  display: flex;
-}
-
 .form__dialog {
-  padding: 0.4rem 0 0 0;
   width: 100%;
-  margin: 0 auto;
+  margin: 0.4rem auto 0.2rem auto;
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
