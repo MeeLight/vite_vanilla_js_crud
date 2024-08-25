@@ -28,7 +28,8 @@ export default ({ mode }) => {
     },
     preview: {
       host: true,
-      port: +env.VITE_PREV_PORT
+      port: +env.VITE_PREV_PORT,
+      clearScreen: true
     }
   })
 }

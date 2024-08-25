@@ -30,7 +30,7 @@ pnpm i
 pnpm dev
 ```
 
-### 🚀 Run Build
+### 🚀 Run Preview
 
 ```shell
 pnpm preview
