@@ -1,15 +1,73 @@
-@import 'partials/variables';
-@import 'partials/reset';
+@use 'partials/reset';
+@import 'components/dialog';
 
-:root {
-  font-size: 16px;
-  font-family: 'Arial', sans-serif;
-  background-color: $dark;
-  color: $light;
-  height: 100dvh;
-  width: 100dvw;
+main {
+  // outline: 1px solid var(--dark);
+  padding: 2rem 0 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 1rem;
 }
 
-html {
-  scroll-behavior: smooth;
+.btn {
+  text-transform: capitalize;
+  user-select: none;
+  padding: 0.4rem 1rem;
+  outline: 1px solid var(--dark);
+  border-radius: 0.2rem;
+  transition:
+    background-color 500ms ease-in-out,
+    color 500ms ease-in-out;
+
+  &:hover {
+    background-color: var(--dark);
+    color: var(--light);
+  }
+}
+
+:is(.btn__dark, .btn__gray) {
+  outline: none;
+  transition: none;
+  transition: background-color 500ms ease-in-out;
+}
+
+.btn__dark {
+  background-color: var(--dark);
+  color: var(--light);
+
+  &:hover {
+    background-color: rgba(29, 30, 36, 0.8);
+  }
+}
+
+:is(.btn__gray, .btn--not_allowed) {
+  background-color: #929299;
+  color: #e5e5e6;
+
+  &:hover {
+    background-color: #a1a1a8;
+    color: #e5e5e6;
+  }
+}
+
+// .btn__gray {}
+
+.btn--not_allowed {
+  cursor: not-allowed;
+}
+
+.form {
+  display: flex;
+}
+
+.form__dialog {
+  padding: 0.4rem 0 0 0;
+  width: 100%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  // outline: 1px solid black;
 }

@@ -1,10 +1,25 @@
-/* (Opcional) Configuramos si un usuario ha activado el modo alto contraste. (WD) */
-@media (prefers-contrast: high) {
-  // :root {
-  // }
+@use 'variables';
+
+/**
+ * (Opcional) Configuramos si un usuario ha
+ * activado el modo alto contraste. (WD)
+ */
+/* @media (prefers-contrast: high) {
+  :root {
+  }
+} */
+
+/* (Opcional) Configuramos el texto que seleccionamos */
+::selection {
+  background-color: var(--selection_color);
+  color: inherit;
 }
 
-/* (Opcional) Desactivamos los animations en el caso de que el usuario haya configurado el modo sin animation */
+/**
+ * (Opcional)  Desactivamos los animations en el
+ * caso de que el usuario haya configurado el modo
+ * sin animation.
+ */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
@@ -35,11 +50,8 @@ figure {
   max-width: 100%;
   width: 100%;
   display: block;
-  /* (Opcional) */
   object-fit: cover;
-  /* (Opcional) */
   object-position: center center;
-  /* (Opcional) */
   -webkit-user-drag: none;
   user-select: none;
   -moz-user-select: none;
@@ -67,6 +79,7 @@ li {
 /* (Opcional) Configuramos anclas suaves */
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
 }
 
 /* Desactivamos estilos por defecto de las principales etiquetas de texto */
@@ -102,11 +115,6 @@ q:after {
   content: none;
 }
 
-div {
-  margin: 0;
-  padding: 0;
-}
-
 /* Nivelamos problemas de tipografías y colocación de formularios */
 form,
 input,
@@ -120,7 +128,6 @@ label {
   background-color: transparent;
   color: inherit;
   display: block;
-  /* (Opcional) */
   appearance: none;
 }
 
@@ -137,20 +144,30 @@ svg {
   display: block;
 }
 
+/* Para ocultar la flecha de los elemento que se colapsan */
 input::-webkit-calendar-picker-indicator {
   display: none !important;
 }
 
-/* Configuramos la tipografía para toda la web */
+button {
+  border: none;
+  cursor: pointer;
+}
+
 body {
+  font-size: 16px;
   min-height: 100vh;
+  width: 100dvw;
+  max-width: 50rem;
+  font-family: var(--main_font);
+  background-color: var(--light_bg);
+  color: var(--dark);
   font-size: 100%;
-  /* (Opcional) */
+  line-height: 1.25;
   hyphens: auto;
-  /* (Opcional) */
+  text-rendering: optimizeLegibility;
   font-smooth: always;
-  /* (Opcional) */
   -webkit-font-smoothing: antialiased;
-  /* (Opcional) */
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }

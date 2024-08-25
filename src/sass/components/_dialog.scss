@@ -1,0 +1,47 @@
+:is(dialog, dialog[open]) {
+  width: 22rem;
+  min-width: 15rem;
+  overflow-y: auto;
+  outline: none;
+  padding: 1.25rem 1.875rem;
+  padding: 1.5rem 3rem;
+  border-radius: var(--rounded-sm);
+  background-color: var(--light_bg);
+  color: var(--dark);
+  box-shadow: rgba(black, 0.09) 0 0.1875rem 0.75rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  inset: 0;
+  margin: auto;
+}
+
+dialog {
+  scale: 0;
+  transition:
+    scale 400ms ease,
+    display 400ms ease allow-discrete;
+
+  &[open] {
+    scale: 1;
+    transition: scale 400ms ease-in-out;
+
+    @starting-style {
+      scale: 0;
+    }
+  }
+
+  &::-webkit-backdrop {
+    background-color: rgba(black, 0.4);
+    -webkit-backdrop-filter: blur(0.25rem);
+    backdrop-filter: blur(0.25rem);
+  }
+
+  &::backdrop {
+    background-color: rgba(black, 0.4);
+    -webkit-backdrop-filter: blur(0.25rem);
+    backdrop-filter: blur(0.25rem);
+  }
+}
