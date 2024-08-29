@@ -1,4 +1,9 @@
 :is(.modal, .modal[open]) {
+  @media (min-width: 1920px) {
+    width: 28rem;
+  }
+
+  // First Mobile
   @media (max-width: 500px) {
     width: 18rem;
   }
@@ -6,9 +11,6 @@
     width: 14rem;
   }
   @media (max-width: 400px) {
-    width: 12rem;
-  }
-  @media (max-width: 350px) {
     width: 12rem;
   }
   @media (max-width: 320px) {
@@ -25,7 +27,6 @@
   overflow-y: auto;
   overflow-x: hidden;
   outline: none;
-  padding: 1.25rem 1.875rem;
   padding: 1.5rem 3rem;
   border-radius: var(--rounded-sm);
   background-color: var(--light_bg);

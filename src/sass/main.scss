@@ -1,10 +1,5 @@
-// Partials
 @use 'partials/reset';
-
-// Components
-@use 'components/btn';
-@use 'components/form';
-@use 'components/modal';
+@import 'components/btn', 'components/form', 'components/modal';
 
 .mainContent {
   // outline: 1px solid var(--dark);
@@ -17,12 +12,9 @@
 }
 
 .btn__modal {
-  width: 30%;
+  width: 100%;
   text-align: center;
 
-  @media (max-width: 420px) {
-    width: 14rem;
-  }
   @media (max-width: 250px) {
     width: 7.5rem;
   }
@@ -71,7 +63,8 @@
 
 .form__dialog {
   width: 100%;
-  margin: 0.4rem auto 0.2rem auto;
+  // outline: 1px solid black;
+  margin: 0.4rem auto;
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
