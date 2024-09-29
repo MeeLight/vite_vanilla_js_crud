@@ -31,4 +31,12 @@ export default class View {
   get getView() {
    return this.view
   }
+
+  /**
+   * @public
+   * @return {HTMLElement}
+   */
+  createElement({} = {}) {
+    
+  }
 }
