@@ -1,9 +1,9 @@
-# Vite - Vanilla JavaScript - CRUD
+# $ Pay2m
 
 <br>
 
 <div align="center">
-  <img width="600px" src="./public/repo_bg.png" alt="Repo Background">
+  <img width="600px" src="./static/images/repo_bg.png" alt="Repo Background">
 </div>
 
 <br>
@@ -14,7 +14,7 @@
 - Sass (v1.77.6)
 
 ## Preview Mode
-[Deployed Page 🚀](https://vite_vanilla_js_crud_moises_reyes.surge.sh)
+[Deployed Page 🚀](https://vite-vanilla-js-crud.vercel.app)
 
 ## 🎯 Setup
 
