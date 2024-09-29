@@ -1,31 +1,33 @@
 :is(.modal, .modal[open]) {
-  @media (max-width: 500px) {
-    width: 18rem;
-  }
-  @media (max-width: 420px) {
-    width: 14rem;
-  }
-  @media (max-width: 400px) {
-    width: 12rem;
-  }
-  @media (max-width: 350px) {
-    width: 12rem;
-  }
-  @media (max-width: 320px) {
-    width: 10rem;
-  }
-  @media (max-width: 300px) {
-    width: 8rem;
-  }
-  @media (max-width: 250px) {
-    width: 5rem;
+  @media (min-width: 1920px) {
+    max-height: 32rem;
+    max-width: 30rem;
   }
 
-  width: 22rem;
-  overflow-y: auto;
+  // First Mobile
+  @media (max-width: 500px) {
+    max-width: 18rem;
+  }
+  @media (max-width: 420px) {
+    max-width: 15rem;
+  }
+  @media (max-width: 350px) {
+    max-width: 12rem;
+  }
+  @media (max-width: 320px) {
+    max-width: 9rem;
+  }
+  @media (max-width: 270px) {
+    max-width: 8rem;
+  }
+  @media (max-width: 250px) {
+    max-width: 6rem;
+  }
+
+  max-height: 25rem;
+  max-width: 22rem;
   overflow-x: hidden;
   outline: none;
-  padding: 1.25rem 1.875rem;
   padding: 1.5rem 3rem;
   border-radius: var(--rounded-sm);
   background-color: var(--light_bg);
@@ -33,16 +35,17 @@
   box-shadow: rgba(black, 0.09) 0 0.1875rem 0.75rem;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   gap: 1rem;
   inset: 0;
   margin: auto;
+  position: relative;
 }
 
 .modal {
   scale: 0;
-  translate: 0 30%;
+  translate: 0 100%;
   transition:
     scale 400ms ease,
     translate 800ms ease,
@@ -51,7 +54,9 @@
   &[open] {
     scale: 1;
     translate: 0;
-    transition: scale 400ms ease-in-out, translate 800ms ease;
+    transition:
+      scale 400ms ease-in-out,
+      translate 800ms ease;
 
     @starting-style {
       scale: 0;
@@ -59,15 +64,10 @@
     }
   }
 
+  &::backdrop,
   &::-webkit-backdrop {
     background-color: rgba(black, 0.4);
-    -webkit-backdrop-filter: blur(0.25rem);
     backdrop-filter: blur(0.25rem);
-  }
-
-  &::backdrop {
-    background-color: rgba(black, 0.4);
     -webkit-backdrop-filter: blur(0.25rem);
-    backdrop-filter: blur(0.25rem);
   }
 }

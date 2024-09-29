@@ -1,0 +1,89 @@
+// Animations
+@keyframes navBrandFadeIn {
+  from {
+    margin: 0 0 0 -2rem;
+    opacity: 0;
+  }
+  to {
+    margin: 0 0 0 4rem;
+    opacity: 1;
+  }
+}
+
+@keyframes navListFadeIn {
+  from {
+    margin: 0 -2rem 0 0;
+    opacity: 0;
+  }
+  to {
+    margin: 0 4rem 0 0;
+    opacity: 1;
+  }
+}
+
+.nav {
+  height: 3.2rem;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(#1d1e24, 0.4);
+  padding: 0.5rem 0;
+
+  & .nav__brand {
+    margin: 0 0 0 4rem;
+    width: max-content;
+    border: none;
+    animation: navBrandFadeIn 800ms ease;
+    // outline: 1px solid black;
+
+    .nav__title {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+  }
+
+  & .nav__list {
+    margin: 0 4rem 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: navListFadeIn 800ms ease;
+    // outline: 1px solid black;
+    gap: 1.5rem;
+
+    .nav__item {
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 550ms ease-in-out;
+      color: rgba(#1d1e24, 0.6);
+
+      &:hover {
+        color: rgba(#1d1e24, 0.8);
+      }
+
+      & svg path {
+        stroke: rgba(#1d1e24, 0.8);
+        border: none;
+        outline: none;
+        transition: stroke 550ms ease-in-out;
+      }
+      &:hover svg path {
+        stroke: rgba(#1d1e24, 0.6);
+      }
+    }
+
+    .nav__item--active {
+      color: var(--dark);
+      border-radius: 0.15rem;
+      padding: 0.4rem 0.6rem;
+      outline: 1px solid rgba(#1d1e24, 0.8);
+      transition: color 550ms ease-in-out, outline 550ms ease-in-out;
+
+      &:hover {
+        color: rgba(#1d1e24, 0.6);
+        outline: 1px solid rgba(#1d1e24, 0.6);
+      }
+    }
+  }
+}

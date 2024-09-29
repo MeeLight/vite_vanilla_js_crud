@@ -1,28 +1,70 @@
-// Partials
 @use 'partials/reset';
 
-// Components
-@use 'components/btn';
-@use 'components/form';
-@use 'components/modal';
+// Loaders
+@import 'loaders/default', 'loaders/ellipsis';
 
-.mainContent {
+// Views
+@import 'views/loader.view';
+
+// Layouts
+@import 'layouts/nav';
+
+// Components
+@import 'components/btn', 'components/form', 'components/modal';
+@import 'components/input';
+
+// Animations
+@keyframes fadeIn {
+  from {
+    margin: 0 0 0 -25px;
+    opacity: 0;
+  }
+  to {
+    margin: 0;
+    opacity: 1;
+  }
+}
+
+.main {
   // outline: 1px solid var(--dark);
-  padding: 2rem 0 0 2rem;
+  padding: 2rem 0 0 4rem;
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
+  animation: fadeIn 800ms ease;
   gap: 1rem;
 }
 
+.title {
+  font-size: 2.8rem;
+  font-weight: 200;
+}
+
+.small {
+  margin: 0;
+  padding: 0;
+  max-width: 50rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+  // outline: 1px solid black;
+
+  & strong {
+    font-weight: 700;
+  }
+}
+
+.btn#btn__modal > svg > g > g > path {
+  transition: stroke 500ms ease-in-out;
+}
+.btn#btn__modal:hover > svg > g > g > path {
+  stroke: var(--light);
+}
+
 .btn__modal {
-  width: 30%;
+  width: 100%;
   text-align: center;
 
-  @media (max-width: 420px) {
-    width: 14rem;
-  }
   @media (max-width: 250px) {
     width: 7.5rem;
   }
@@ -53,15 +95,14 @@
 }
 
 .btn__gray--outline {
-  transition: none;
-  transition: opacity 600ms ease-in-out;
+  transition: color 600ms ease-in-out;
   outline: 1px solid #7d7d83;
-  color: #7d7d83;
+  background-color: #eaeff2;
+  color: #69696c;
 
   &:hover {
-    opacity: 0.8;
-    background-color: var(--light_bg);
-    color: #7d7d83;
+    background-color: #ecf1f5;
+    color: #69696c;
   }
 }
 
@@ -69,9 +110,14 @@
   cursor: not-allowed;
 }
 
-.form__dialog {
+.form__dialog__buttons > button {
+  max-width: 8rem;
+}
+
+.form__dialog__buttons {
   width: 100%;
-  margin: 0.4rem auto 0.2rem auto;
+  // outline: 1px solid black;
+  margin: 0.4rem auto;
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
@@ -81,3 +127,5 @@
     gap: 1rem;
   }
 }
+
+// :is(.modal, .modal[open]) {}

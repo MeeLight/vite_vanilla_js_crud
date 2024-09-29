@@ -1,0 +1,21 @@
+.loader {
+  --width: 0.2rem;
+
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border-top: var(--width) solid var(--dark);
+  user-select: none;
+  pointer-events: none;
+  border-right: var(--width) solid transparent;
+  animation: rotation 825ms linear infinite;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

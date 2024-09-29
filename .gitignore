@@ -37,3 +37,6 @@ static/styles/**/.sass-cache/
 # Custom
 .env
 src/**/*.md
+static/icons/animations.less
+static/icons/success.svg
+static/icons/error.svg
