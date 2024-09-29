@@ -25,7 +25,7 @@ function main() {
     router.homeView()
   }
 
-  setTimeout(app(), RANDOM_MILLISECONDS)
+  setTimeout(() => app(), RANDOM_MILLISECONDS)
 }
 
 // Run
