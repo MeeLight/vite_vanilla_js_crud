@@ -32,7 +32,7 @@ export default class HomeView extends View {
       nav.setAttribute('class', 'nav')
 
       nav.innerHTML = /*html*/ `
-        <div class="nav nav__brand">
+        <div class="nav__brand">
           <a
             href="/"
             class="nav__title"
