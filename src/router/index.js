@@ -4,6 +4,7 @@ import LoaderView from './../views/loader.view.js'
 
 /**
  * @class Router
+ * @version 1.0
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class Router {
