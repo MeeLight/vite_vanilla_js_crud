@@ -17,12 +17,15 @@ const RANDOM_MILLISECONDS = getRandomNumber(1, 3) * 1000
 
 function main() {
   const router = new Router()
-  router.loaderView()
+  router.showLoaderView()
+
+  // Preload Styles
+  document.head.lastElementChild.setAttribute('rel', 'preload')
 
   /** @return {void} */
   const app = () => {
     router.removeView(1)
-    router.homeView()
+    router.showHomeView()
   }
 
   setTimeout(() => app(), RANDOM_MILLISECONDS)
