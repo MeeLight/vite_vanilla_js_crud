@@ -107,7 +107,7 @@ export default class HomeView extends View {
       type: 'main',
       attributes: [{ qualifiedName: 'class', value: 'main' }],
       isNav: true,
-      navComponent: nav.getNav(),
+      navComponent: nav.getElement,
       view: this.getView
     })
 

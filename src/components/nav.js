@@ -69,12 +69,4 @@ export default class Nav extends Component {
   #getDataOfNavLinks() {
     return navLinksData
   }
-
-  /**
-   * @public
-   * @return {HTMLElement}
-   */
-  getNav() {
-    return this.node
-  }
 }
