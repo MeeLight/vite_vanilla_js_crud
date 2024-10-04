@@ -13,6 +13,7 @@ export default class View {
     this.view = ''
   }
 
+  /** @public @return {void} */
   main() {}
 
   /**
@@ -29,14 +30,6 @@ export default class View {
    * @return {string}
    */
   get getView() {
-   return this.view
-  }
-
-  /**
-   * @public
-   * @return {HTMLElement}
-   */
-  createElement({} = {}) {
-    
+    return this.view
   }
 }
