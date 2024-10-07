@@ -1,3 +1,16 @@
+.table__container {
+  width: calc(100vw - 12vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  // outline: 1px solid rgba(black, 0.3);
+
+  @media (max-width: 642px) {
+    margin: -1rem 0 0 0;
+  }
+}
+
 .table {
   // outline: 1px solid black;
   width: 100%;
@@ -5,44 +18,54 @@
   border: none;
   border-collapse: collapse;
   white-space: nowrap;
-  min-width: calc(100vw - 12vw);
-  overflow-y: auto;
-
-  @media (max-width: 800px) {
-    width: 90vw;
-  }
+  overflow-x: hidden;
 
   & thead {
     & tr th {
       width: 8rem;
       font-size: 0.9rem;
       font-weight: 300;
-      padding: 0 0 1rem 0;
-      padding: 1.2rem 0;
+      // padding: 0 0 1remt 0;
+      padding: 1.2rem;
       color: rgba(black, 0.8);
       border-bottom: 1px solid rgba(black, 0.3);
+
+      @media (max-width: 500px) {
+        width: 5rem;
+        font-size: 1rem;
+      }
     }
   }
 
   & tbody {
     & tr td {
+      width: 8rem;
       max-height: 3rem;
       height: 2.5rem;
       vertical-align: middle;
-      padding: 1rem 0;
+      padding: 1rem 1.2rem;
       // outline: 1px solid black;
       border-bottom: 1px solid rgba(black, 0.3);
 
-      @media (max-width: 642px) {
-        padding: 1.4rem 0;
+      @media (max-width: 500px) {
+        font-size: 1rem;
+        width: 5rem;
       }
     }
+  }
+
+  @media (max-width: 642px) {
+    margin: 0 0 1.5rem 25rem;
+  }
+
+  @media (max-width: 500px) {
+    margin: 0 0 1.5rem 32rem;
   }
 }
 
 .actions__buttons__container {
   // outline: 1px solid black;
-  // outline: none;
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: center;

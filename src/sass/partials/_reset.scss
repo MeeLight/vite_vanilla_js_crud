@@ -154,15 +154,15 @@ button {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  background-color: var(--light);
+  width: 8px;
+  background-color: #c0c5ca;
 }
 ::-webkit-scrollbar-thumb {
-  width: 10px;
-  background-color: #a4abae;
+  width: 8px;
+  background-color: #dddedf;
 
   &:hover {
-    background-color: #949a9c;
+    background-color: #ebebeb;
   }
 }
 
