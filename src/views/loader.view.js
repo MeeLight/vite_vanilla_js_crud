@@ -8,7 +8,8 @@ import HtmlElement from './../common/htmlElement.js'
 import Loader from './../components/loader.js'
 
 /**
- * @class Loader View
+ * ## Loader View
+ * @class
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class LoaderView extends View {
