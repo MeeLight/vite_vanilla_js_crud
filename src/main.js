@@ -6,14 +6,8 @@ import './../static/styles/main.css'
 // Router
 import Router from './router/index.js'
 
-// Config
-// import { customFetch } from './helpers/fetch.js'
-
 // Helpers
 import { getRandomNumber } from './helpers/index.js'
-
-// Model Temporary
-import PagoMovilModel from './models/pagoMovil.model.js'
 
 /**
  * ### Possible values: 1000 - 2000 - 3000
@@ -28,8 +22,8 @@ function main() {
   if (!isUser) router.showIndexView()
   else router.showLoaderView()
 
-  // Preload Styles
-  document.head.lastElementChild.setAttribute('rel', 'preload')
+  // Preload Styles - Dev Mode
+  // document.head.lastElementChild.setAttribute('rel', 'preload')
 
   /** @return {void} */
   const app = () => {
@@ -37,19 +31,6 @@ function main() {
       router.removeView(1)
       router.showHomeView()
     }
-
-    const pagoMovil = new PagoMovilModel({
-      document: '284666697',
-      alias: 'Moises Reyes',
-      numberPhone: '04120519181',
-      bank: {
-        code: '0102',
-        name: 'Banco de Venezuela',
-        rif: 'G200099976'
-      }
-    })
-
-    console.log(pagoMovil)
   }
 
   if (isUser) {
@@ -61,4 +42,4 @@ function main() {
 }
 
 // Run
-document.addEventListener('DOMContentLoaded', main(), false)
+document.addEventListener('DOMContentLoaded', main, false)
