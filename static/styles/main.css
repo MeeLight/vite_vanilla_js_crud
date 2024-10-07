@@ -697,6 +697,31 @@ body {
     margin: 0 0 1.5rem 32rem;
   }
 }
+@media (max-width: 360px) {
+  .table {
+    margin: 0 0 1.5rem 35rem;
+  }
+}
+@media (min-width: 768px) and (min-height: 1024px) {
+  .table {
+    margin: 0 0 1.5rem 10.5rem;
+  }
+}
+@media (min-width: 1024px) and (min-height: 1366px) {
+  .table {
+    margin: 0 0 1.5rem 0;
+  }
+}
+@media (min-width: 912px) and (min-height: 1368px) {
+  .table {
+    margin: 0 0 1.5rem 2.5rem;
+  }
+}
+@media (min-width: 1920px) {
+  .table {
+    margin: 0 0 1.5rem 0;
+  }
+}
 
 .actions__buttons__container {
   user-select: none;
@@ -991,7 +1016,20 @@ body {
   }
 }
 .dialog__buttons__container button, .dialog__buttons__container form > button {
-  max-width: 7rem;
+  max-width: 12rem;
+  width: 9.5rem;
+}
+@media (min-width: 1920px) {
+  .dialog__buttons__container button, .dialog__buttons__container form > button {
+    max-width: 12rem;
+    width: 10.5rem;
+  }
+}
+@media (max-width: 500px) {
+  .dialog__buttons__container button, .dialog__buttons__container form > button {
+    max-width: 7rem;
+    width: 7rem;
+  }
 }
 @media (max-width: 350px) {
   .dialog__buttons__container button, .dialog__buttons__container form > button {

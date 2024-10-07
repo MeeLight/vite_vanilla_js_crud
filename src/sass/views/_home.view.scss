@@ -261,7 +261,18 @@
 
   & button,
   & form > button {
-    max-width: 7rem;
+    max-width: 12rem;
+    width: 9.5rem;
+
+    @media (min-width: 1920px) {
+      max-width: 12rem;
+      width: 10.5rem;
+    }
+
+    @media (max-width: 500px) {
+      max-width: 7rem;
+      width: 7rem;
+    }
 
     @media (max-width: 350px) {
       width: 8rem;
