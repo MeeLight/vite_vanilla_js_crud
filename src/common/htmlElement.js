@@ -1,7 +1,8 @@
 'use strict'
 
 /**
- * @class Html Element
+ * ## Html Element
+ * @class
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class HtmlElement {

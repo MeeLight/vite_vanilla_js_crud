@@ -1,7 +1,8 @@
 'use strict'
 
 /**
- * @class Component
+ * ## Component
+ * @class
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class Component {
@@ -54,10 +55,10 @@ export default class Component {
 
   /**
    * @public
-   * @param {string} value
+   * @param {string} [value='']
    * @return {void}
    */
-  setHtml(value) {
+  setHtml(value = '') {
     if (!value || value === '') return
     this.node.innerHTML = value
   }

@@ -1,0 +1,94 @@
+.table {
+  // outline: 1px solid black;
+  width: 100%;
+  text-align: center;
+  border: none;
+  border-collapse: collapse;
+  white-space: nowrap;
+  min-width: calc(100vw - 12vw);
+  overflow-y: auto;
+
+  @media (max-width: 800px) {
+    width: 90vw;
+  }
+
+  & thead {
+    & tr th {
+      width: 8rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+      padding: 0 0 1rem 0;
+      padding: 1.2rem 0;
+      color: rgba(black, 0.8);
+      border-bottom: 1px solid rgba(black, 0.3);
+    }
+  }
+
+  & tbody {
+    & tr td {
+      max-height: 3rem;
+      height: 2.5rem;
+      vertical-align: middle;
+      padding: 1rem 0;
+      // outline: 1px solid black;
+      border-bottom: 1px solid rgba(black, 0.3);
+
+      @media (max-width: 642px) {
+        padding: 1.4rem 0;
+      }
+    }
+  }
+}
+
+.actions__buttons__container {
+  // outline: 1px solid black;
+  // outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  & span {
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 400ms ease-in-out;
+  }
+
+  & span:nth-child(1) {
+    &:hover {
+      background-color: rgba(215, 236, 255, 0.8);
+    }
+
+    & svg:nth-child(1) {
+      fill: rgba(122, 122, 122, 0.8);
+    }
+
+    &:hover svg:nth-child(1):hover {
+      fill: rgb(74, 118, 156);
+    }
+  }
+
+  & span:nth-child(2) {
+    &:hover {
+      background-color: rgb(255, 215, 215);
+    }
+
+    & svg g:nth-child(3) path {
+      fill: rgba(122, 122, 122, 0.8);
+    }
+
+    &:hover svg g:nth-child(3) path {
+      fill: rgb(170, 30, 30);
+    }
+  }
+
+  :is(& span svg:nth-child(1), & span svg g:nth-child(3) path) {
+    padding: 0.4rem;
+    border-radius: 50%;
+    transition: fill 400ms ease;
+  }
+
+  & span svg:nth-child(1):hover {
+    fill: red;
+  }
+}

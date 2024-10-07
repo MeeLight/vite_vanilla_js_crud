@@ -1,7 +1,8 @@
 'use strict'
 
 /**
- * @class View
+ * ## View
+ * @class
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class View {

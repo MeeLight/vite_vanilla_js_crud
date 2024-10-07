@@ -3,7 +3,7 @@
 import Component from './../common/component.js'
 
 // Data
-import { navLinksData } from './../data/nav.js'
+import { navTitle, navLinksData } from './../data/nav.js'
 
 /**
  * @class Nav (nav)
@@ -12,7 +12,7 @@ import { navLinksData } from './../data/nav.js'
 export default class Nav extends Component {
   /**
    * @constructor
-   * @param {string} className
+   * @param {string} [className='nav']
    * @param {Document|null} [parentElement=null]
    */
   constructor(className = 'nav', parentElement = null) {
@@ -22,7 +22,7 @@ export default class Nav extends Component {
     this.node.innerHTML = /*html*/ `
       <div class="nav__brand">
         <a href="/" class="nav__title" rel="noopener noreferrer" target="_self">
-          $ Pay2m
+          ${navTitle}
         </a>
       </div>
       <ul class="nav__list">${this.#getNavLinks()}</ul>

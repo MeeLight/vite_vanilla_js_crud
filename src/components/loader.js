@@ -40,7 +40,7 @@ export default class Loader extends Component {
         <div class="loader__ellipsis__child-2"></div>
         <div class="loader__ellipsis__child-3"></div>
         <div class="loader__ellipsis__child-4"></div>
-      `.trim()
+      `
     }
   }
 }

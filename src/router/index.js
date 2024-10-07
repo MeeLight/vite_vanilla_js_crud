@@ -2,6 +2,7 @@
 
 // Views
 import HomeView from './../views/home.view.js'
+import IndexView from './../views/index.view.js'
 import LoaderView from './../views/loader.view.js'
 
 /**
@@ -39,6 +40,15 @@ export default class Router {
     })
 
     loaderView.main()
+  }
+
+  /**
+   * @public
+   * @return {void}
+   */
+  showIndexView() {
+    const indexView = new IndexView()
+    indexView.main()
   }
 
   /**
