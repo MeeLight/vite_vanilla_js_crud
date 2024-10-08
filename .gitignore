@@ -40,3 +40,4 @@ src/**/*.md
 static/icons/animations.less
 static/icons/success.svg
 static/icons/error.svg
+src/data/test.txt
