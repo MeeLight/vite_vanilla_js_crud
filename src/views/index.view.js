@@ -16,6 +16,9 @@ import UserValidation from './../validations/user/index.js'
 // Helpers
 import { getRandomNumber } from './../helpers/index.js'
 
+// Store
+import Store from './../store/index.js'
+
 /**
  * ## Index View
  * @class
@@ -178,7 +181,7 @@ export default class IndexView extends View {
         /** @type {{ name: string }} */
         const { name } = Object.fromEntries(new FormData(event.currentTarget))
 
-        localStorage.setItem('pay2m_name', name.trim())
+        Store.set('name', name.trim())
         formElement.reset()
 
         /**

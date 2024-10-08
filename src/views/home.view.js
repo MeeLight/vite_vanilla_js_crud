@@ -9,6 +9,9 @@ import Modal from './../components/modal.js'
 import Nav from './../components/nav.js'
 // import Loader from '../components/loader.js'
 
+// Store
+import Store from './../store/index.js'
+
 /**
  * ## Home View
  * @class
@@ -135,14 +138,14 @@ export default class HomeView extends View {
     })
 
     welcomeMessageElement.innerHTML = /*html*/ `
-      Bienvenido ${localStorage.getItem('pay2m_name')} |
+      Bienvenido ${Store.get('name')} |
       ${
-        localStorage.getItem('pay2m_last_activity') === null ?
+        !Store.is('last_activity') ?
           'No hay actividad reciente.'
         : /*html*/ `
           <span>
             Última actividad:
-            ${lastActionMessage.format(-8, 'minutes')}.
+            ${lastActionMessage.format(Store.get('last_activity'), 'minutes')}.
           </span>
         `
       }
@@ -218,139 +221,42 @@ export default class HomeView extends View {
           </button>
         </form>
 
-        <div class="table__container">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Teléfono</th>
-                <th>Banco</th>
-                <th>Alias</th>
-                <th>Documento</th>
-                <th>Fecha de registro</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>0412***4567</td>
-                <td>BANCO DE VENEZUELA</td>
-                <td>John Doe</td>
-                <td>12***678</td>
-                <td>${currentDate}</td>
-                <td>
-                  <div class="actions__buttons__container">
-                    <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                    <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>0412***4567</td>
-                <td>BANCO DE VENEZUELA</td>
-                <td>John Doe</td>
-                <td>12***678</td>
-                <td>${currentDate}</td>
-                <td>
-                  <div class="actions__buttons__container">
-                    <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                    <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>0412***4567</td>
-                <td>BANCO DE VENEZUELA</td>
-                <td>John Doe</td>
-                <td>12***678</td>
-                <td>${currentDate}</td>
-                <td>
-                  <div class="actions__buttons__container">
-                    <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                    <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>0412***4567</td>
-                <td>BANCO DE VENEZUELA</td>
-                <td>John Doe</td>
-                <td>12***678</td>
-                <td>${currentDate}</td>
-                <td>
-                  <div class="actions__buttons__container">
-                    <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                    <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>0412***4567</td>
-                <td>BANCO DE VENEZUELA</td>
-                <td>John Doe</td>
-                <td>12***678</td>
-                <td>${currentDate}</td>
-                <td>
-                  <div class="actions__buttons__container">
-                    <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                    <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>0412***4567</td>
-                <td>BANCO DE VENEZUELA</td>
-                <td>John Doe</td>
-                <td>12***678</td>
-                <td>${currentDate}</td>
-                <td>
-                  <div class="actions__buttons__container">
-                    <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                    <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-            <tr>
-              <td>0412***4567</td>
-              <td>BANCO DE VENEZUELA</td>
-              <td>John Doe</td>
-              <td>12***678</td>
-              <td>${currentDate}</td>
-              <td>
-                <div class="actions__buttons__container">
-                  <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                  <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>0412***4567</td>
-              <td>BANCO DE VENEZUELA</td>
-              <td>John Doe</td>
-              <td>12***678</td>
-              <td>${currentDate}</td>
-              <td>
-                <div class="actions__buttons__container">
-                  <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                  <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>0412***4567</td>
-              <td>BANCO DE VENEZUELA</td>
-              <td>John Doe</td>
-              <td>12***678</td>
-              <td>${currentDate}</td>
-              <td>
-                <div class="actions__buttons__container">
-                  <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                  <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
+        ${
+          !Store.is('pago_movil') || Store.get('pago_movil') === '[]' ?
+            `<h2>No hay elementos para mostrar.</h2>`
+          : `
+            <div class="table__container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Teléfono</th>
+                    <th>Banco</th>
+                    <th>Alias</th>
+                    <th>Documento</th>
+                    <th>Fecha de registro</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0412***4567</td>
+                    <td>BANCO DE VENEZUELA</td>
+                    <td>John Doe</td>
+                    <td>12***678</td>
+                    <td>${currentDate}</td>
+                    <td>
+                      <div class="actions__buttons__container">
+                        <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
+                        <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          `
+        }
+
       </section>
     `)
   }
