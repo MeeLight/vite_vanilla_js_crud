@@ -497,7 +497,7 @@ body {
 }
 
 :is(.modal, .modal[open]) {
-  max-height: 32rem;
+  max-height: 36rem;
   max-width: 22rem;
   overflow-x: hidden;
   outline: none;
