@@ -15,6 +15,9 @@ import Store from './../store/index.js'
 // Validations
 import PagoMovilValidation from './../validations/pagoMovil/index.js'
 
+// Helpers
+import { handleInput } from './../helpers/index.js'
+
 // Data
 import { banksData } from './../data/bank.js'
 
@@ -142,7 +145,25 @@ export default class HomeView extends View {
    *   getBanks:           () => Promise<Array.<{code: string, name: string}>>,
    *   clickBtnModalEvent: (mainElement: HTMLElement) => void,
    *   onSubmit:           () => void,
+   *   handleDocument: (
+   *     event: Event &
+   *       {currentTarget: EventTarget & HTMLInputElement} &
+   *       {target: HTMLInputElement} & InputEvent,
+   *     inputElement: HTMLInputElement
+   *   ),
+   *   handleNumberPhone: (
+   *     event: Event &
+   *       {currentTarget: EventTarget & HTMLInputElement} &
+   *       {target: HTMLInputElement} & InputEvent,
+   *     inputElement: HTMLInputElement
+   *   ),
    *   handleBank: (
+   *     event: Event &
+   *       {currentTarget: EventTarget & HTMLInputElement} &
+   *       {target: HTMLInputElement} & InputEvent,
+   *     inputElement: HTMLInputElement
+   *   ),
+   *   handleAlias: (
    *     event: Event &
    *       {currentTarget: EventTarget & HTMLInputElement} &
    *       {target: HTMLInputElement} & InputEvent,
@@ -171,6 +192,7 @@ export default class HomeView extends View {
        * @return {void}
        */
       clickBtnModalEvent: async mainElement => {
+        // Modal config
         const modal = new Modal()
 
         await this.#components.showModalComponent(modal)
@@ -181,17 +203,38 @@ export default class HomeView extends View {
 
         // ---------------------------------------------------------------------
 
-        /** @type {HTMLButtonElement} */
-        const saveBtn = document.querySelector(
-          '.dialog__buttons__container>button'
+        // Elements
+        const classNameOfSaveBtn = '.dialog__buttons__container>button'
+        const saveBtn = document.querySelector(classNameOfSaveBtn)
+
+        // Inputs
+        const documentInput = document.getElementById('document')
+        const numberPhoneInput = document.getElementById('numberPhone')
+        const bankInput = document.getElementById('bank')
+        const aliasInput = document.getElementById('alias')
+
+        // Events
+        documentInput.addEventListener(
+          'keyup',
+          event => this.#actions.handleDocument(event, documentInput),
+          false
         )
 
-        /** @type {HTMLInputElement} */
-        const inputElement = document.getElementById('bank')
-
-        inputElement.addEventListener(
+        numberPhoneInput.addEventListener(
           'keyup',
-          (event) => this.#actions.handleBank(event, inputElement),
+          event => this.#actions.handleNumberPhone(event, numberPhoneInput),
+          false
+        )
+
+        bankInput.addEventListener(
+          'keyup',
+          event => this.#actions.handleBank(event, bankInput),
+          false
+        )
+
+        aliasInput.addEventListener(
+          'keyup',
+          event => this.#actions.handleAlias(event, aliasInput),
           false
         )
 
@@ -208,62 +251,116 @@ export default class HomeView extends View {
        * @param {HTMLInputElement} inputElement
        * @return {void}
        */
+      handleDocument: (event, inputElement) => {
+        event.preventDefault()
+
+        /** @type {string} */
+        const value = event.currentTarget.value
+
+        handleInput(value, inputElement, {
+          entityName: 'documento',
+          errorMessageId: 'error__message__of__document',
+          submitBtnId: 'form__submit__btn__modal',
+          validations: new PagoMovilValidation(value).getValidations.document
+        })
+      },
+
+      /**
+       * @param {
+       *   Event &
+       *   {currentTarget: EventTarget & HTMLInputElement} &
+       *   {target: HTMLInputElement} & InputEvent
+       * } event
+       *
+       * @param {HTMLInputElement} inputElement
+       * @return {void}
+       */
+      handleNumberPhone: (event, inputElement) => {
+        event.preventDefault()
+
+        /** @type {string} */
+        const value = event.currentTarget.value
+
+        handleInput(value, inputElement, {
+          entityName: 'teléfono',
+          errorMessageId: 'error__message__of__numberPhone',
+          submitBtnId: 'form__submit__btn__modal',
+          validations: new PagoMovilValidation(value).getValidations.numberPhone
+        })
+      },
+
+      /**
+       * @param {
+       *   Event &
+       *   {currentTarget: EventTarget & HTMLInputElement} &
+       *   {target: HTMLInputElement} & InputEvent
+       * } event
+       *
+       * @param {HTMLInputElement} inputElement
+       * @return {void}
+       */
       handleBank: (event, inputElement) => {
         event.preventDefault()
 
         /** @type {string} */
-        let value = event.currentTarget.value
+        const value = event.currentTarget.value
 
-        /** @type {HTMLSpanElement} */
-        const errorMessageElement = document.getElementById(
-          'error__message__of__bank'
-        )
+        // Elements
+        const errorMessage = document.getElementById('error__message__of__bank')
+        const btn = document.getElementById('form__submit__btn__modal')
+        const theme = document.head.querySelector('meta[name="theme-color"]')
 
-        const themeColor = document.head.querySelector(
-          'meta[name="theme-color"]'
-        )
-
-        /** @type {HTMLButtonElement} */
-        const savedBtnElement = document.getElementById(
-          'form__submit__btn__modal'
-        )
-
-        if (value === '') {
-          errorMessageElement.textContent = 'El banco es requerido.'
-          inputElement.classList.add('input--error')
-          savedBtnElement.setAttribute('disabled', '')
-          savedBtnElement.classList.add('btn__dark--disabled')
-          themeColor.setAttribute('content', '#c53030')
-        } else {
-          savedBtnElement.removeAttribute('disabled')
-          savedBtnElement.classList.remove('btn__dark--disabled')
-          errorMessageElement.textContent = ''
-          inputElement.classList.remove('input--error')
-          themeColor.setAttribute('content', '#101015')
-
-          // For each validation of "bank"
-          new PagoMovilValidation(value).getValidations.bank.forEach(
-            ({ pattern, errorMessage }) => {
-              if (pattern) {
-                errorMessageElement.textContent = errorMessage
-                inputElement.classList.add('input--error')
-                savedBtnElement.setAttribute('disabled', '')
-                savedBtnElement.classList.add('btn__dark--disabled')
-                themeColor.setAttribute('content', '#c53030')
-              }
+        handleInput(value, inputElement, {
+          entityName: 'banco',
+          errorMessageId: 'error__message__of__bank',
+          submitBtnId: 'form__submit__btn__modal',
+          validations: new PagoMovilValidation(value).getValidations.bank,
+          callback() {
+            if (
+              !banksData.some(
+                bank => value.toUpperCase() === bank.toUpperCase()
+              )
+            ) {
+              errorMessage.textContent = 'El banco no es correcto.'
+              inputElement.classList.add('input--error')
+              btn.setAttribute('disabled', '')
+              btn.classList.add('btn__dark--disabled')
+              theme.setAttribute('content', '#c53030')
             }
-          )
-
-          if (
-            !banksData.some(bank => value.toUpperCase() === bank.toUpperCase())
-          ) {
-            errorMessageElement.textContent = 'El Banco no es correcto.'
-            inputElement.classList.add('input--error')
-            savedBtnElement.setAttribute('disabled', '')
-            savedBtnElement.classList.add('btn__dark--disabled')
-            themeColor.setAttribute('content', '#c53030')
           }
-        }
+        })
+      },
+
+      /**
+       * @param {
+       *   Event &
+       *   {currentTarget: EventTarget & HTMLInputElement} &
+       *   {target: HTMLInputElement} & InputEvent
+       * } event
+       *
+       * @param {HTMLInputElement} inputElement
+       * @return {void}
+       */
+      handleAlias: (event, inputElement) => {
+        event.preventDefault()
+
+        /** @type {string} */
+        const value = event.currentTarget.value
+
+        handleInput(value, inputElement, {
+          entityName: 'alias',
+          errorMessageId: 'error__message__of__alias',
+          submitBtnId: 'form__submit__btn__modal',
+          validations: new PagoMovilValidation(value).getValidations.alias,
+          callback() {
+            const whitespacesPattern = /\s{2}/.test(value)
+            const charactersPattern = !/^[a-z\s\d]+$/i.test(value)
+
+            if ([charactersPattern, whitespacesPattern].includes(true)) {
+              inputElement.value = ''
+            }
+          }
+        })
       },
 
       /** @return {void} */
@@ -283,11 +380,12 @@ export default class HomeView extends View {
           document: data.document.trim(),
           alias: data.alias.trim(),
           numberPhone: data.numberPhone.trim(),
-          bank: data.bank.toUpperCase()
+          bank: data.bank.toUpperCase().trim()
         }
 
         savedBtnElement.setAttribute('disabled', '')
         savedBtnElement.classList.add('btn__dark--disabled')
+        alert(JSON.stringify(data))
 
         form.reset()
       }

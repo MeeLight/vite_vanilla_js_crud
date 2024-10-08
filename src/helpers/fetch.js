@@ -1,3 +1,5 @@
+'use strict'
+
 /**
  * ## Custom Fetch
  * **NOTE:** The default content type is: `application/json`.
