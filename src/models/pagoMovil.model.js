@@ -25,7 +25,7 @@ export default class PagoMovilModel extends PersonModel {
    *   alias:       string,
    *   document:    string,
    *   numberPhone: string,
-   *   bank:        {code: string, name: string, rif: string}
+   *   bank:        {code: string, name: string}
    * }}
    */
   constructor({ document, alias, numberPhone, bank }) {

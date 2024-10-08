@@ -497,12 +497,12 @@ body {
 }
 
 :is(.modal, .modal[open]) {
-  max-height: 25rem;
+  max-height: 32rem;
   max-width: 22rem;
   overflow-x: hidden;
   outline: none;
   padding: 1.5rem 0;
-  border-radius: var(--rounded-sm);
+  border-radius: 0.3rem;
   background-color: var(--light_bg);
   color: var(--dark);
   box-shadow: rgba(0, 0, 0, 0.09) 0 0.1875rem 0.75rem;
@@ -1066,6 +1066,10 @@ body {
   width: 100%;
   flex-direction: column;
   gap: 1rem;
+  margin: 1rem 0 0 0;
+}
+.new__person__form input:first-child {
+  margin: 0.5rem 0 0 0;
 }
 
 :is(.welcome__modal, .welcome__modal[open]) {
@@ -1097,14 +1101,18 @@ body {
   background-color: rgba(128, 128, 128, 0.06);
 }
 
-.error__message {
+:is(.error__message, .error__message__of__pagoMovil) {
   color: var(--error);
   font-weight: 500;
   transition: opacity 800ms ease-in-out;
   margin: 0 0 1rem 0;
 }
-.error__message::selection {
+:is(.error__message, .error__message__of__pagoMovil)::selection {
   background-color: rgb(255, 215, 215);
+}
+
+.error__message__of__pagoMovil {
+  margin: 0;
 }
 
 .btn__dark--disabled {

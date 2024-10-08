@@ -12,17 +12,13 @@ export default class BankModel {
   /** @private @type {string} */
   #name
 
-  /** @private @type {string} */
-  #rif
-
   /**
    * @constructor
-   * @param {{code: string, name: string, rif: string}}
+   * @param {{code: string, name: string}}
    */
-  constructor({ code, name, rif }) {
+  constructor({ code, name }) {
     this.#code = code
     this.#name = name
-    this.#rif = rif
   }
 
   /**
@@ -53,20 +49,5 @@ export default class BankModel {
    */
   get getName() {
     return this.#name
-  }
-
-  /**
-   * @public
-   * @param {string} rif
-   */
-  set rif(rif) {
-    this.#rif = rif
-  }
-  /**
-   * @public
-   * @return {string}
-   */
-  get getRif() {
-    return this.#rif
   }
 }

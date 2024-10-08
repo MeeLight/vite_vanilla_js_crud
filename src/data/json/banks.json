@@ -1,152 +1,106 @@
 [
   {
-      "codigo": "0001",
-      "nombre": "Banco Central de Venezuela",
-      "rif": "G200001100"
+    "code": "0102",
+    "name": "Banco de Venezuela"
   },
   {
-      "codigo": "0102",
-      "nombre": "Banco de Venezuela S.A.C.A. Banco Universal",
-      "rif": "G200099976"
+    "code": "0156",
+    "name": "100% Banco"
   },
   {
-      "codigo": "0104",
-      "nombre": "Venezolano de Crédito, S.A. Banco Universal",
-      "rif": "J000029709"
+    "code": "0172",
+    "name": "Bancamiga Banco Microfinanciero C A"
   },
   {
-      "codigo": "0105",
-      "nombre": "Banco Mercantil, C.A. Banco Universal",
-      "rif": "J000029610"
+    "code": "0114",
+    "name": "Bancaribe"
   },
   {
-      "codigo": "0108",
-      "nombre": "Banco Provincial, S.A. Banco Universal",
-      "rif": "J000029679"
+    "code": "0171",
+    "name": "Banco Activo"
   },
   {
-      "codigo": "0114",
-      "nombre": "Bancaribe C.A. Banco Universal",
-      "rif": "J000029490"
+    "code": "0166",
+    "name": "Banco Agricola de Venezuela"
   },
   {
-      "codigo": "0115",
-      "nombre": "Banco Exterior C.A. Banco Universal",
-      "rif": "J000029504"
+    "code": "0175",
+    "name": "Banco Bicentenario del Pueblo"
   },
   {
-      "codigo": "0116",
-      "nombre": "Banco Occidental de Descuento, Banco Universal C.A",
-      "rif": "J300619460"
+    "code": "0128",
+    "name": "Banco Caroni"
   },
   {
-      "codigo": "0128",
-      "nombre": "Banco Caroní C.A. Banco Universal",
-      "rif": "J095048551"
+    "code": "0163",
+    "name": "Banco Del Tesoro"
   },
   {
-      "codigo": "0134",
-      "nombre": "Banesco Banco Universal S.A.C.A.",
-      "rif": "J070133805"
+    "code": "0115",
+    "name": "Banco Exterior"
   },
   {
-      "codigo": "0137",
-      "nombre": "Banco Sofitasa, Banco Universal",
-      "rif": "J090283846"
+    "code": "0151",
+    "name": "Banco Fondo Comun"
   },
   {
-      "codigo": "0138",
-      "nombre": "Banco Plaza, Banco Universal",
-      "rif": "J002970553"
+    "code": "0173",
+    "name": "Banco Internacional de Desarrollo"
   },
   {
-      "codigo": "0146",
-      "nombre": "Banco de la Gente Emprendedora C.A",
-      "rif": "J301442040"
+    "code": "0105",
+    "name": "Banco Mercantil"
   },
   {
-      "codigo": "0151",
-      "nombre": "BFC Banco Fondo Común C.A. Banco Universal",
-      "rif": "J000723060"
+    "code": "0104",
+    "name": "Banco Venezolano de Credito"
   },
   {
-      "codigo": "0156",
-      "nombre": "100% Banco, Banco Universal C.A.",
-      "rif": "J085007768"
+    "code": "0138",
+    "name": "Banco Plaza"
   },
   {
-      "codigo": "0157",
-      "nombre": "DelSur Banco Universal C.A.",
-      "rif": "J000797234"
+    "code": "0137",
+    "name": "Banco Sofitasa"
   },
   {
-      "codigo": "0163",
-      "nombre": "Banco del Tesoro, C.A. Banco Universal",
-      "rif": "G200051876"
+    "code": "0191",
+    "name": "Banco Nacional de Credito"
   },
   {
-      "codigo": "0166",
-      "nombre": "Banco Agrícola de Venezuela, C.A. Banco Universal",
-      "rif": "G200057955"
+    "code": "0168",
+    "name": "Bancrecer"
   },
   {
-      "codigo": "0168",
-      "nombre": "Bancrecer, S.A. Banco Microfinanciero",
-      "rif": "J316374173"
+    "code": "0134",
+    "name": "Banesco"
   },
   {
-      "codigo": "0169",
-      "nombre": "Mi Banco, Banco Microfinanciero C.A.",
-      "rif": "J315941023"
+    "code": "0177",
+    "name": "Banfanb"
   },
   {
-      "codigo": "0171",
-      "nombre": "Banco Activo, Banco Universal",
-      "rif": "J080066227"
+    "code": "0146",
+    "name": "Bangente"
   },
   {
-      "codigo": "0172",
-      "nombre": "Bancamica, Banco Microfinanciero C.A.",
-      "rif": "J316287599"
+    "code": "0174",
+    "name": "Banplus"
   },
   {
-      "codigo": "0173",
-      "nombre": "Banco Internacional de Desarrollo, C.A. Banco Universal",
-      "rif": "J294640109"
+    "code": "0108",
+    "name": "BBVA Provincial"
   },
   {
-      "codigo": "0174",
-      "nombre": "Banplus Banco Universal, C.A",
-      "rif": "J000423032"
+    "code": "0157",
+    "name": "DelSur Banco Universal"
   },
   {
-      "codigo": "0175",
-      "nombre": "Banco Bicentenario del Pueblo de la Clase Obrera, Mujer y Comunas B.U.",
-      "rif": "G200091487"
+    "code": "0169",
+    "name": "Mi Banco"
   },
   {
-      "codigo": "0176",
-      "nombre": "Novo Banco, S.A. Sucursal Venezuela Banco Universal",
-      "rif": "J308918644"
-  },
-  {
-      "codigo": "0177",
-      "nombre": "Banco de la Fuerza Armada Nacional Bolivariana, B.U.",
-      "rif": "G200106573"
-  },
-  {
-      "codigo": "0190",
-      "nombre": "Citibank N.A.",
-      "rif": "J000526621"
-  },
-  {
-      "codigo": "0191",
-      "nombre": "Banco Nacional de Crédito, C.A. Banco Universal",
-      "rif": "J309841327"
-  },
-  {
-      "codigo": "0601",
-      "nombre": "Instituto Municipal de Crédito Popular",
-      "rif": "G200068973"
+    "code": "0178",
+    "name": "N58 Banco Digital Banco Microfinciero S A"
   }
 ]

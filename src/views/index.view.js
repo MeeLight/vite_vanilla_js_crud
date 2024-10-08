@@ -51,7 +51,6 @@ export default class IndexView extends View {
       showModalComponent: modalElement => {
         modalElement.setHtml(/*html*/ `
           <h1>$ Pay2m</h1>
-
           <h2>¡Bienvenido(a)!</h2>
 
           <hr class="line" />
@@ -129,16 +128,22 @@ export default class IndexView extends View {
         /** @type {HTMLButtonElement} */
         const submitBtnElement = document.querySelector('button[type="submit"]')
 
+        const themeColor = document.head.querySelector(
+          'meta[name="theme-color"]'
+        )
+
         if (value === '') {
           errorMessageElement.textContent = 'El nombre es requerido.'
           inputElement.classList.add('input--error')
           submitBtnElement.setAttribute('disabled', '')
           submitBtnElement.classList.add('btn__dark--disabled')
+          themeColor.setAttribute('content', '#c53030')
         } else {
           submitBtnElement.removeAttribute('disabled')
           submitBtnElement.classList.remove('btn__dark--disabled')
           errorMessageElement.textContent = ''
           inputElement.classList.remove('input--error')
+          themeColor.setAttribute('content', '#101015')
 
           // For each validation of "name"
           new UserValidation(value).getValidations.name.forEach(
@@ -148,6 +153,7 @@ export default class IndexView extends View {
                 inputElement.classList.add('input--error')
                 submitBtnElement.setAttribute('disabled', '')
                 submitBtnElement.classList.add('btn__dark--disabled')
+                themeColor.setAttribute('content', '#c53030')
               }
             }
           )

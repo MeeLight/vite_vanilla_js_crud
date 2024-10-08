@@ -15,3 +15,35 @@
 
 // Views
 @import 'views/home.view', 'views/index.view';
+
+:is(.error__message, .error__message__of__pagoMovil) {
+  color: var(--error);
+  font-weight: 500;
+  transition: opacity 800ms ease-in-out;
+  margin: 0 0 1rem 0;
+
+  &::selection {
+    background-color: rgb(255, 215, 215);
+  }
+}
+
+.error__message__of__pagoMovil {
+  margin: 0;
+}
+
+.btn__dark--disabled {
+  cursor: not-allowed;
+  color: #8f9090;
+  background-color: rgba(#8f9090, 0.3);
+
+  &:hover {
+    color: #838383;
+    background-color: rgba(#8f9090, 0.6);
+  }
+}
+
+.loader__submit__btn {
+  height: 1rem;
+  width: 1rem;
+  border-top: 1px solid #1d1e24;
+}

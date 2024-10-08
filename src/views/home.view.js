@@ -12,6 +12,12 @@ import Nav from './../components/nav.js'
 // Store
 import Store from './../store/index.js'
 
+// Validations
+import PagoMovilValidation from './../validations/pagoMovil/index.js'
+
+// Data
+import { banksData } from './../data/bank.js'
+
 /**
  * ## Home View
  * @class
@@ -28,16 +34,17 @@ export default class HomeView extends View {
   /**
    * @private
    * @return {{
-   *   showModalComponent: (modalElement: Modal) => void
+   *   showModalComponent: (modalElement: Modal) => Promise<void>
    * }}
    */
   get #components() {
     return {
       /**
+       * @async
        * @param {Modal} modalElement
-       * @return {void}
+       * @return {Promise<void>}
        */
-      showModalComponent: modalElement => {
+      showModalComponent: async modalElement => {
         modalElement.setHtml(/*html*/ `
           <!-- <form method="dialog" class="form form__cancel">
             <button class="btn btn__cancel">x</button>
@@ -53,33 +60,78 @@ export default class HomeView extends View {
             <input
               type="text"
               class="input"
-              name="name"
-              placeholder="Nombre"
-              maxlength="35"
-            />
-            <input
-              type="text"
-              class="input"
               name="document"
+              id="document"
               placeholder="Documento"
               maxlength="8"
+              required
             />
+            <span class="error__message__of__pagoMovil" id="error__message__of__document"></span>
+
             <input
               type="tel"
               class="input"
               name="numberPhone"
+              id="numberPhone"
               placeholder="Teléfono"
               maxlength="11"
+              required
             />
+            <span class="error__message__of__pagoMovil" id="error__message__of__numberPhone"></span>
+
+            <input
+              type="text"
+              class="input"
+              name="bank"
+              id="bank"
+              list="banks"
+              placeholder="Banco"
+              maxlength="48"
+              required
+            />
+            <span class="error__message__of__pagoMovil" id="error__message__of__bank"></span>
+
+            <input
+              type="text"
+              class="input"
+              name="alias"
+              id="alias"
+              placeholder="Alias"
+              maxlength="35"
+              required
+            />
+            <span class="error__message__of__pagoMovil" id="error__message__of__alias"></span>
           </form>
 
           <div class="dialog__buttons__container">
             <form method="dialog" class="form form__dialog__buttons">
               <button type="submit" class="btn btn__modal btn__gray--outline">Cancelar</button>
             </form>
-            <button type="submit" class="btn btn__modal btn__dark">Guardar</button>
+            <button
+              type="button"
+              id="form__submit__btn__modal"
+              class="btn btn__modal btn__dark btn__dark--disabled"
+              disabled
+            >
+              Guardar
+            </button>
           </div>
         `)
+
+        let banksTemplate = ''
+        const banksData = await this.#actions.getBanks()
+        const banksDataList = document.createElement('datalist')
+
+        banksDataList.setAttribute('id', 'banks')
+
+        banksData.forEach(({ code, name }) => {
+          banksTemplate += `
+            <option value="${code} - ${name.toUpperCase()}"></option>
+          `
+        })
+
+        banksDataList.innerHTML = banksTemplate
+        document.body.querySelector('main').appendChild(banksDataList)
       }
     }
   }
@@ -87,23 +139,157 @@ export default class HomeView extends View {
   /**
    * @private
    * @return {{
-   *   clickBtnModalEvent: (mainElement: HTMLElement) => void
+   *   getBanks:           () => Promise<Array.<{code: string, name: string}>>,
+   *   clickBtnModalEvent: (mainElement: HTMLElement) => void,
+   *   onSubmit:           () => void,
+   *   handleBank: (
+   *     event: Event &
+   *       {currentTarget: EventTarget & HTMLInputElement} &
+   *       {target: HTMLInputElement} & InputEvent,
+   *     inputElement: HTMLInputElement
+   *   )
    * }}
    */
   get #actions() {
     return {
       /**
+       * @async
+       * @return {Promise<Array.<{code: string, name: string}>>}
+       */
+      async getBanks() {
+        try {
+          const response = (await import('./../data/json/banks.json')).default
+          return response
+        } catch (error) {
+          console.log(error)
+        }
+      },
+
+      /**
+       * @async
        * @param {HTMLElement} mainElement
        * @return {void}
        */
-      clickBtnModalEvent: mainElement => {
+      clickBtnModalEvent: async mainElement => {
         const modal = new Modal()
 
-        this.#components.showModalComponent(modal)
+        await this.#components.showModalComponent(modal)
         mainElement.appendChild(modal.getElement)
 
         modal.show(true)
         modal.deleteOfDOM(mainElement, 'form[method="dialog"]')
+
+        // ---------------------------------------------------------------------
+
+        /** @type {HTMLButtonElement} */
+        const saveBtn = document.querySelector(
+          '.dialog__buttons__container>button'
+        )
+
+        /** @type {HTMLInputElement} */
+        const inputElement = document.getElementById('bank')
+
+        inputElement.addEventListener(
+          'keyup',
+          (event) => this.#actions.handleBank(event, inputElement),
+          false
+        )
+
+        saveBtn.addEventListener('click', () => this.#actions.onSubmit(), false)
+      },
+
+      /**
+       * @param {
+       *   Event &
+       *   {currentTarget: EventTarget & HTMLInputElement} &
+       *   {target: HTMLInputElement} & InputEvent
+       * } event
+       *
+       * @param {HTMLInputElement} inputElement
+       * @return {void}
+       */
+      handleBank: (event, inputElement) => {
+        event.preventDefault()
+
+        /** @type {string} */
+        let value = event.currentTarget.value
+
+        /** @type {HTMLSpanElement} */
+        const errorMessageElement = document.getElementById(
+          'error__message__of__bank'
+        )
+
+        const themeColor = document.head.querySelector(
+          'meta[name="theme-color"]'
+        )
+
+        /** @type {HTMLButtonElement} */
+        const savedBtnElement = document.getElementById(
+          'form__submit__btn__modal'
+        )
+
+        if (value === '') {
+          errorMessageElement.textContent = 'El banco es requerido.'
+          inputElement.classList.add('input--error')
+          savedBtnElement.setAttribute('disabled', '')
+          savedBtnElement.classList.add('btn__dark--disabled')
+          themeColor.setAttribute('content', '#c53030')
+        } else {
+          savedBtnElement.removeAttribute('disabled')
+          savedBtnElement.classList.remove('btn__dark--disabled')
+          errorMessageElement.textContent = ''
+          inputElement.classList.remove('input--error')
+          themeColor.setAttribute('content', '#101015')
+
+          // For each validation of "bank"
+          new PagoMovilValidation(value).getValidations.bank.forEach(
+            ({ pattern, errorMessage }) => {
+              if (pattern) {
+                errorMessageElement.textContent = errorMessage
+                inputElement.classList.add('input--error')
+                savedBtnElement.setAttribute('disabled', '')
+                savedBtnElement.classList.add('btn__dark--disabled')
+                themeColor.setAttribute('content', '#c53030')
+              }
+            }
+          )
+
+          if (
+            !banksData.some(bank => value.toUpperCase() === bank.toUpperCase())
+          ) {
+            errorMessageElement.textContent = 'El Banco no es correcto.'
+            inputElement.classList.add('input--error')
+            savedBtnElement.setAttribute('disabled', '')
+            savedBtnElement.classList.add('btn__dark--disabled')
+            themeColor.setAttribute('content', '#c53030')
+          }
+        }
+      },
+
+      /** @return {void} */
+      onSubmit() {
+        /** @type {HTMLFormElement} */
+        const form = document.getElementById('new__person__form')
+
+        /** @type {HTMLButtonElement} */
+        const savedBtnElement = document.getElementById(
+          'form__submit__btn__modal'
+        )
+
+        /** @type {{document: string, numberPhone: string, bank: string, alias: string}} */
+        let data = Object.fromEntries(new FormData(form).entries())
+
+        data = {
+          document: data.document.trim(),
+          alias: data.alias.trim(),
+          numberPhone: data.numberPhone.trim(),
+          bank: data.bank.toUpperCase()
+        }
+
+        savedBtnElement.setAttribute('disabled', '')
+        savedBtnElement.classList.add('btn__dark--disabled')
+
+        form.reset()
       }
     }
   }
@@ -130,7 +316,6 @@ export default class HomeView extends View {
     })
 
     // ------------------------------------------------------------------------
-
     const welcomeMessageElement = document.getElementById('welcome__message')
 
     const lastActionMessage = new Intl.RelativeTimeFormat('es-VE', {
@@ -152,9 +337,9 @@ export default class HomeView extends View {
     `
 
     /** @type {HTMLButtonElement} */
-    const btn = mainElement.querySelector('button#btn__modal')
+    const modalBtn = mainElement.querySelector('button#btn__modal')
 
-    btn.addEventListener(
+    modalBtn.addEventListener(
       'click',
       () => this.#actions.clickBtnModalEvent(mainElement),
       false
@@ -256,7 +441,6 @@ export default class HomeView extends View {
             </div>
           `
         }
-
       </section>
     `)
   }
