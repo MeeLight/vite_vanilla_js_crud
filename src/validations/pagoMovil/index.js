@@ -38,8 +38,18 @@ export default class PagoMovilValidation {
           )[0].errorMessage.replace('Hay', 'Hubo')
         }
       ],
-      document: [{}],
-      numberPhone: [{}],
+      document: [
+        {
+          pattern: !/^[\d]{7,8}$/.test(value),
+          errorMessage: 'El documento no es correcto.'
+        }
+      ],
+      numberPhone: [
+        {
+          pattern: !/(0412|0424|0251|0414|0426|0416|0414|412|424|251|414|426|416|414)\d{7}/.test(value),
+          errorMessage: 'El teléfono no es correcto.'
+        }
+      ],
       bank: [
         {
           pattern: /\s{2}/.test(value),

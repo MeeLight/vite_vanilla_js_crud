@@ -14,7 +14,7 @@ import Modal from './../components/modal.js'
 import UserValidation from './../validations/user/index.js'
 
 // Helpers
-import { getRandomNumber } from './../helpers/index.js'
+import { getRandomNumber, handleInput } from './../helpers/index.js'
 
 // Store
 import Store from './../store/index.js'
@@ -75,10 +75,11 @@ export default class IndexView extends View {
               required
             />
 
-            <span class="error__message"></span>
+            <span class="error__message" id="error__message__of__name"></span>
 
             <button
               type="submit"
+              id="submit__btn"
               class="btn btn__modal btn__dark btn__dark--disabled"
               disabled
             >
@@ -122,51 +123,20 @@ export default class IndexView extends View {
         /** @type {string} */
         let value = event.currentTarget.value
 
-        /** @type {HTMLSpanElement} */
-        const errorMessageElement = document.querySelector('.error__message')
-
-        /** @type {HTMLButtonElement} */
-        const submitBtnElement = document.querySelector('button[type="submit"]')
-
-        const themeColor = document.head.querySelector(
-          'meta[name="theme-color"]'
-        )
-
-        if (value === '') {
-          errorMessageElement.textContent = 'El nombre es requerido.'
-          inputElement.classList.add('input--error')
-          submitBtnElement.setAttribute('disabled', '')
-          submitBtnElement.classList.add('btn__dark--disabled')
-          themeColor.setAttribute('content', '#c53030')
-        } else {
-          submitBtnElement.removeAttribute('disabled')
-          submitBtnElement.classList.remove('btn__dark--disabled')
-          errorMessageElement.textContent = ''
-          inputElement.classList.remove('input--error')
-          themeColor.setAttribute('content', '#101015')
-
-          // For each validation of "name"
-          new UserValidation(value).getValidations.name.forEach(
-            ({ pattern, errorMessage }) => {
-              if (pattern) {
-                errorMessageElement.textContent = errorMessage
-                inputElement.classList.add('input--error')
-                submitBtnElement.setAttribute('disabled', '')
-                submitBtnElement.classList.add('btn__dark--disabled')
-                themeColor.setAttribute('content', '#c53030')
-              }
-            }
-          )
-        }
+        handleInput(value, inputElement, {
+          entityName: 'nombre',
+          errorMessageId: 'error__message__of__name',
+          submitBtnId: 'submit__btn',
+          validations: new UserValidation(value).getValidations.name
+        })
       },
 
       /**
        * @param {SubmitEvent} event
        * @param {HTMLFormElement} formElement
-       * @param {Modal|null} [modal=null]
        * @return {void}
        */
-      saveName: (event, formElement, modal) => {
+      saveName: (event, formElement) => {
         event.preventDefault()
 
         /** @type {HTMLButtonElement} */
@@ -245,7 +215,7 @@ export default class IndexView extends View {
 
     formElement.addEventListener(
       'submit',
-      event => this.#actions.saveName(event, formElement, modal),
+      event => this.#actions.saveName(event, formElement),
       false
     )
   }

@@ -281,11 +281,23 @@ export default class HomeView extends View {
         /** @type {string} */
         const value = event.currentTarget.value
 
+        /** @type {HTMLInputElement} */
+        const numberPhoneInput = document.getElementById('numberPhone')
+
         handleInput(value, inputElement, {
           entityName: 'teléfono',
           errorMessageId: 'error__message__of__numberPhone',
           submitBtnId: 'form__submit__btn__modal',
-          validations: new PagoMovilValidation(value).getValidations.numberPhone
+          validations: new PagoMovilValidation(value).getValidations
+            .numberPhone,
+          callback() {
+            const pattern = /(412|424|251|414|426|416|414)\d{7}/
+
+            numberPhoneInput.setAttribute(
+              'maxlength',
+              pattern.test(value) ? '10' : '11'
+            )
+          }
         })
       },
 
