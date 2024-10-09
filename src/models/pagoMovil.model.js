@@ -34,17 +34,11 @@ export default class PagoMovilModel extends PersonModel {
     this.#bank = new BankModel({ ...bank })
 
     /** @type {Intl.DateTimeFormatOptions} */
-    const options = {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' }
 
-    this.#createdAt = new Intl.DateTimeFormat('es-VE', options)
-      .format(new Date())
-      .replace(',', ' -')
+    this.#createdAt = new Intl.DateTimeFormat('es-VE', options).format(
+      new Date()
+    )
   }
 
   /**
@@ -64,10 +58,19 @@ export default class PagoMovilModel extends PersonModel {
 
   /**
    * @public
-   * @return {string}
+   * @return {{ code: string, name: string }}
    */
   get getBank() {
     return this.#bank
+  }
+
+  /**
+   * @public
+   * @example '0102 - BANCO DE VENEZUELA'
+   * @return {string}
+   */
+  get getBankInfo() {
+    return `${this.#bank.getCode} - ${this.#bank.getName}`
   }
 
   /**

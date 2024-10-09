@@ -9,17 +9,21 @@ import UserValidation from './../user/index.js'
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class PagoMovilValidation {
-  /** @private @type {{[entity: string]: Array.<{pattern: RegExp, errorMessage: string}>}} */
+  /** @private @type {{[entity: string]: Array.<{pattern: boolean, errorMessage: string}>}} */
   #validations
 
   /**
    * @constructor
    * @param {string} value
-   * @param {{[entity: string]: Array.<{pattern: RegExp, errorMessage: string}>}} [othersValidations={}]
+   * @param {{[entity: string]: Array.<{pattern: boolean, errorMessage: string}>}} [othersValidations={}]
    */
   constructor(value, othersValidations = {}) {
     this.#validations = {
       alias: [
+        {
+          pattern: value.length === 0,
+          errorMessage: 'El alias es requerido.'
+        },
         UserValidation.getNameValidations(value)[1],
         {
           pattern: UserValidation.getNameValidations(value)[1].pattern,
@@ -40,17 +44,29 @@ export default class PagoMovilValidation {
       ],
       document: [
         {
+          pattern: value.length === 0,
+          errorMessage: 'El documento es requerido.'
+        },
+        {
           pattern: !/^[\d]{7,8}$/.test(value),
           errorMessage: 'El documento no es correcto.'
         }
       ],
       numberPhone: [
         {
+          pattern: value.length === 0,
+          errorMessage: 'El teléfono es requerido.'
+        },
+        {
           pattern: !/(0412|0424|0251|0414|0426|0416|0414|412|424|251|414|426|416|414)\d{7}/.test(value),
           errorMessage: 'El teléfono no es correcto.'
         }
       ],
       bank: [
+        {
+          pattern: value.length === 0,
+          errorMessage: 'El banco es requerido.'
+        },
         {
           pattern: /\s{2}/.test(value),
           errorMessage: 'El banco no es correcto.'
@@ -74,10 +90,10 @@ export default class PagoMovilValidation {
   /**
    * @public
    * @return {{
-   *   document:    Array.<{pattern: RegExp, errorMessage: string}>,
-   *   numberPhone: Array.<{pattern: RegExp, errorMessage: string}>,
-   *   bank:        Array.<{pattern: RegExp, errorMessage: string}>,
-   *   alias:       Array.<{pattern: RegExp, errorMessage: string}>
+   *   document:    Array.<{pattern: boolean, errorMessage: string}>,
+   *   numberPhone: Array.<{pattern: boolean, errorMessage: string}>,
+   *   bank:        Array.<{pattern: boolean, errorMessage: string}>,
+   *   alias:       Array.<{pattern: boolean, errorMessage: string}>
    * }}
    */
   get getValidations() {
