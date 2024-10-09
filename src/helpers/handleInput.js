@@ -1,5 +1,7 @@
 'use strict'
 
+import PagoMovilValidation from './../validations/pagoMovil/index.js'
+
 /**
  * @param {string} value
  * @param {HTMLInputElement} inputElement
@@ -50,20 +52,41 @@ export const handleInput = (
 
     if (callback !== null) callback()
 
-    // Final validation
     const allInputsElement = document.querySelectorAll('input[required]')
-    const values = []
+    const inputValues = []
+    allInputsElement.forEach(input => inputValues.push(input.value))
 
-    allInputsElement.forEach(input => values.push(input.value))
-    const result = values.some(value => value === '')
+    const isNotValidDocument = new PagoMovilValidation(
+      inputValues[0]
+    ).getValidations.document.some(({ pattern }) => pattern === true)
 
-    if (result) {
+    const isNotValidNumberPhone = new PagoMovilValidation(
+      inputValues[1]
+    ).getValidations.numberPhone.some(({ pattern }) => pattern === true)
+
+    const isNotValidBank = new PagoMovilValidation(
+      inputValues[2]
+    ).getValidations.bank.some(({ pattern }) => pattern === true)
+
+    const isNotValidAlias = new PagoMovilValidation(
+      inputValues[3]
+    ).getValidations.alias.some(({ pattern }) => pattern === true)
+
+    const isValidForm = [
+      isNotValidDocument,
+      isNotValidNumberPhone,
+      isNotValidBank,
+      isNotValidAlias
+    ].every(value => value === false)
+
+    if (!isValidForm) {
       submitBtn.setAttribute('disabled', '')
       submitBtn.classList.add('btn__dark--disabled')
-      return
+      themeColor.setAttribute('content', '#c53030')
+    } else {
+      submitBtn.removeAttribute('disabled')
+      submitBtn.classList.remove('btn__dark--disabled')
+      themeColor.setAttribute('content', '#101015')
     }
-
-    submitBtn.removeAttribute('disabled')
-    submitBtn.classList.remove('btn__dark--disabled')
   }
 }

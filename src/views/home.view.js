@@ -9,6 +9,9 @@ import Modal from './../components/modal.js'
 import Nav from './../components/nav.js'
 // import Loader from '../components/loader.js'
 
+// Models
+import PagoMovilModel from './../models/pagoMovil.model.js'
+
 // Store
 import Store from './../store/index.js'
 
@@ -150,25 +153,27 @@ export default class HomeView extends View {
    *       {currentTarget: EventTarget & HTMLInputElement} &
    *       {target: HTMLInputElement} & InputEvent,
    *     inputElement: HTMLInputElement
-   *   ),
+   *   ) => void,
    *   handleNumberPhone: (
    *     event: Event &
    *       {currentTarget: EventTarget & HTMLInputElement} &
    *       {target: HTMLInputElement} & InputEvent,
    *     inputElement: HTMLInputElement
-   *   ),
+   *   ) => void,
    *   handleBank: (
    *     event: Event &
    *       {currentTarget: EventTarget & HTMLInputElement} &
    *       {target: HTMLInputElement} & InputEvent,
    *     inputElement: HTMLInputElement
-   *   ),
+   *   ) => void,
    *   handleAlias: (
    *     event: Event &
    *       {currentTarget: EventTarget & HTMLInputElement} &
    *       {target: HTMLInputElement} & InputEvent,
    *     inputElement: HTMLInputElement
-   *   )
+   *   ) => void,
+   *   isValidForm: () => boolean,
+   *   showDataInTable: (isFirstPagoMovil?: boolean) => void
    * }}
    */
   get #actions() {
@@ -239,6 +244,39 @@ export default class HomeView extends View {
         )
 
         saveBtn.addEventListener('click', () => this.#actions.onSubmit(), false)
+      },
+
+      /** @return {boolean} */
+      isValidForm() {
+        const allInputsElement = document.querySelectorAll('input[required]')
+        const inputValues = []
+
+        allInputsElement.forEach(input => inputValues.push(input.value))
+
+        const isNotValidDocument = new PagoMovilValidation(
+          inputValues[0]
+        ).getValidations.document.some(({ pattern }) => pattern === true)
+
+        const isNotValidNumberPhone = new PagoMovilValidation(
+          inputValues[1]
+        ).getValidations.numberPhone.some(({ pattern }) => pattern === true)
+
+        const isNotValidBank = new PagoMovilValidation(
+          inputValues[2]
+        ).getValidations.bank.some(({ pattern }) => pattern === true)
+
+        const isNotValidAlias = new PagoMovilValidation(
+          inputValues[3]
+        ).getValidations.alias.some(({ pattern }) => pattern === true)
+
+        const isValidForm = [
+          isNotValidDocument,
+          isNotValidNumberPhone,
+          isNotValidBank,
+          isNotValidAlias
+        ].every(value => value === false)
+
+        return isValidForm
       },
 
       /**
@@ -386,20 +424,114 @@ export default class HomeView extends View {
         )
 
         /** @type {{document: string, numberPhone: string, bank: string, alias: string}} */
-        let data = Object.fromEntries(new FormData(form).entries())
+        const data = Object.fromEntries(new FormData(form).entries())
 
-        data = {
-          document: data.document.trim(),
-          alias: data.alias.trim(),
-          numberPhone: data.numberPhone.trim(),
-          bank: data.bank.toUpperCase().trim()
+        // Bank Information
+        const bank = data.bank.toUpperCase().trim()
+        const code = bank.substring(0, 4)
+        const bankName = bank.substring(7, bank.length)
+        let numberPhone = data.numberPhone.trim()
+
+        if (numberPhone[0] !== '0') {
+          numberPhone = `0${numberPhone}`
         }
+
+        const pagoMovil = new PagoMovilModel({
+          document: data.document.trim(),
+          numberPhone,
+          bank: { code, name: bankName },
+          alias: data.alias.trim()
+        })
+
+        const lastActivity = new Intl.DateTimeFormat('es-VE', {
+          minute: '2-digit'
+        }).format(new Date())
+
+        Store.set('last_activity', lastActivity)
+
+        Store.setPagoMovil({
+          document: pagoMovil.getDocument,
+          numberPhone: pagoMovil.getNumberPhone,
+          bank: pagoMovil.getBankInfo,
+          alias: pagoMovil.getAlias,
+          createdAt: pagoMovil.getCreatedAt
+        })
 
         savedBtnElement.setAttribute('disabled', '')
         savedBtnElement.classList.add('btn__dark--disabled')
-        alert(JSON.stringify(data))
 
         form.reset()
+        this.showDataInTable(true)
+      },
+
+      /**
+       * @param {boolean} [isFirstPagoMovil=false]
+       * @return {void}
+       */
+      showDataInTable(isFirstPagoMovil = false) {
+        if (!Store.is('pago_movil')) return
+
+        /**
+         * @type {Array.<{
+         *   document:    string,
+         *   numberPhone: string,
+         *   bank:        string,
+         *   alias:       string,
+         *   createdAt:   string
+         * }>}
+         */
+        const pagosMoviles = Store.getParsedJson(Store.get('pago_movil'))
+
+        if (isFirstPagoMovil) {
+          const section = document.body.querySelector('main>section')
+          section.removeChild(section.lastElementChild)
+
+          const divElement = document.createElement('div')
+          divElement.setAttribute('class', 'table__container')
+
+          divElement.innerHTML = /*html*/ `
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Teléfono</th>
+                  <th>Banco</th>
+                  <th>Alias</th>
+                  <th>Documento</th>
+                  <th>Fecha de registro</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          `
+
+          section.appendChild(divElement)
+        }
+
+        const tbody = document.querySelector('tbody')
+        let template = ''
+
+        pagosMoviles.forEach(
+          ({ document, numberPhone, bank, alias, createdAt }) => {
+            template += /*html*/ `
+              <tr>
+                <td>${numberPhone.substring(0, 4)}***${numberPhone.substring(7, numberPhone.length)}</td>
+                <td>${bank.split(' - ')[1]}</td>
+                <td>${alias}</td>
+                <td>${document[0]}${document.length === 8 ? document[1] : ''}***${document.substring(document.length === 8 ? 5 : 4, document.length)}</td>
+                <td>${createdAt}</td>
+                <td>
+                  <div class="actions__buttons__container">
+                    <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
+                    <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
+                  </div>
+                </td>
+              </tr>
+            `
+          }
+        )
+
+        tbody.innerHTML = template
       }
     }
   }
@@ -432,6 +564,11 @@ export default class HomeView extends View {
       numeric: 'auto'
     })
 
+    const ONE_SECOND = 1000
+
+    let currentTime = +new Date().toLocaleTimeString().split(':')[1]
+    let lastActivity = +Store.get('last_activity')
+
     welcomeMessageElement.innerHTML = /*html*/ `
       Bienvenido ${Store.get('name')} |
       ${
@@ -440,11 +577,35 @@ export default class HomeView extends View {
         : /*html*/ `
           <span>
             Última actividad:
-            ${lastActionMessage.format(Store.get('last_activity'), 'minutes')}.
+            ${lastActionMessage.format(
+              -(currentTime - lastActivity),
+              'minutes'
+            )}.
           </span>
         `
       }
     `
+
+    setInterval(() => {
+      currentTime = +new Date().toLocaleTimeString().split(':')[1]
+      lastActivity = +Store.get('last_activity')
+
+      welcomeMessageElement.innerHTML = /*html*/ `
+      Bienvenido ${Store.get('name')} |
+      ${
+        !Store.is('last_activity') ?
+          'No hay actividad reciente.'
+        : /*html*/ `
+          <span>
+            Última actividad:
+            ${lastActionMessage.format(-(currentTime - lastActivity), 'minutes')}.
+          </span>
+        `
+      }
+    `
+    }, ONE_SECOND)
+
+    this.#actions.showDataInTable()
 
     /** @type {HTMLButtonElement} */
     const modalBtn = mainElement.querySelector('button#btn__modal')
@@ -461,20 +622,9 @@ export default class HomeView extends View {
    * @return {void}
    */
   #showHtmlView() {
-    const currentDate = new Intl.DateTimeFormat('es-VE', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    }).format(new Date())
-
     this.setView(/*html*/ `
       <small class="welcome_message" id="welcome__message"></small>
-      <h1 class="title">P2P <strong>|</strong> Pago Móvil</h1>
-
-      <!-- <small class="small">
-        Gestionar los pagos móviles nunca había sido tan sencillo.
-        <strong>$ Pay2m</strong> es la mejor opción. 😎🤑
-      </small> -->
+      <h1 class="title">Pago Móvil <strong>|</strong> Beneficiarios</h1>
 
       <section class="container">
         <form class="header__form__container" autocomplete="off">
@@ -517,7 +667,7 @@ export default class HomeView extends View {
         </form>
 
         ${
-          !Store.is('pago_movil') || Store.get('pago_movil') === '[]' ?
+          !Store.is('pago_movil') || Store.get('pago_movil') === null ?
             `<h2>No hay elementos para mostrar.</h2>`
           : `
             <div class="table__container">
@@ -532,21 +682,7 @@ export default class HomeView extends View {
                     <th>Acciones</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>0412***4567</td>
-                    <td>BANCO DE VENEZUELA</td>
-                    <td>John Doe</td>
-                    <td>12***678</td>
-                    <td>${currentDate}</td>
-                    <td>
-                      <div class="actions__buttons__container">
-                        <span draggable="false"><svg height="28px" width="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#1d1e24"><path d="M216-216h51l375-375-51-51-375 375v51Zm-35.82 72q-15.18 0-25.68-10.3-10.5-10.29-10.5-25.52v-86.85q0-14.33 5-27.33 5-13 16-24l477-477q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T795-642L318-165q-11 11-23.95 16t-27.24 5h-86.63ZM744-693l-51-51 51 51Zm-127.95 76.95L591-642l51 51-25.95-25.05Z"/></svg></span>
-                        <span draggable="false"><svg width="28px" height="28px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="#1d1e24"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#1d1e24" d="M352 192V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64H96a32 32 0 0 1 0-64h256zm64 0h192v-64H416v64zM192 960a32 32 0 0 1-32-32V256h704v672a32 32 0 0 1-32 32H192zm224-192a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32zm192 0a32 32 0 0 0 32-32V416a32 32 0 0 0-64 0v320a32 32 0 0 0 32 32z"></path></g></svg></span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody></tbody>
               </table>
             </div>
           `

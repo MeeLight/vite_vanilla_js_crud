@@ -1,3 +1,6 @@
+// Models
+import PagoMovilModel from './../models/pagoMovil.model.js'
+
 /** @type {'pay2m'} */
 const NAME = 'pay2m'
 
@@ -39,5 +42,78 @@ export default class Store {
    */
   static set(key, value = null) {
     localStorage.setItem(`${NAME}_${key}`, value)
+  }
+
+  /**
+   * @public
+   * @static
+   * @param {{
+   *   document:    string,
+   *   numberPhone: string,
+   *   bank:        string,
+   *   alias:       string,
+   *   createdAt:   string
+   * }}
+   * @return {void}
+   */
+  static setPagoMovil({ document, numberPhone, bank, alias, createdAt }) {
+    let jsonText = ''
+
+    if (Store.is('pago_movil')) {
+      const pagosMovilesJson = Store.get('pago_movil')
+
+      /**
+       * @type {Array.<{
+       *   document:    string,
+       *   numberPhone: string,
+       *   bank:        string,
+       *   alias:       string,
+       *   createdAt:   string
+       * }>}
+       */
+      const pagosMoviles = Store.getParsedJson(pagosMovilesJson)
+
+      pagosMoviles.push({
+        document,
+        numberPhone,
+        bank,
+        alias,
+        createdAt
+      })
+
+      jsonText = Store.getJson(pagosMoviles)
+      localStorage.setItem(`${NAME}_pago_movil`, jsonText)
+      return
+    }
+
+    jsonText = `[${Store.getJson({
+      document,
+      numberPhone,
+      bank,
+      alias,
+      createdAt
+    })}]`
+
+    localStorage.setItem(`${NAME}_pago_movil`, jsonText)
+  }
+
+  /**
+   * @public
+   * @static
+   * @param {Array<any>|object} value
+   * @return {void}
+   */
+  static getJson(value) {
+    return JSON.stringify(value)
+  }
+
+  /**
+   * @public
+   * @static
+   * @param {string} jsonValue
+   * @return {Array<any>|object}
+   */
+  static getParsedJson(jsonValue) {
+    return JSON.parse(jsonValue)
   }
 }
