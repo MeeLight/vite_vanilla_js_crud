@@ -321,3 +321,39 @@
     margin: 0.5rem 0 0 0;
   }
 }
+
+.new__person__form dialog.modal {
+  text-align: center;
+  z-index: 3;
+  gap: 1.5rem;
+
+  span svg {
+    height: 50px;
+    width: 50px;
+    padding: 0.5rem;
+    border-radius: 50%;
+    background-color: rgba(#b4fccc, 0.4);
+  }
+  span svg g path {
+    stroke: #61eba6;
+  }
+
+  h3 {
+    font-size: 2.4rem;
+    font-weight: 400;
+    text-align: center;
+  }
+}
+
+#success__dialog {
+  .btn__dark {
+    font-size: 1.2rem;
+    background-color: var(--dark);
+    color: rgba(#fff, 0.8);
+    transition: opacity 600ms ease-in-out;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
