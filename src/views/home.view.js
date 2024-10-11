@@ -7,7 +7,7 @@ import HtmlElement from './../common/htmlElement.js'
 // Components
 import Modal from './../components/modal.js'
 import Nav from './../components/nav.js'
-// import Loader from '../components/loader.js'
+// import Loader from './../components/loader.js'
 
 // Models
 import PagoMovilModel from './../models/pagoMovil.model.js'
@@ -19,7 +19,7 @@ import Store from './../store/index.js'
 import PagoMovilValidation from './../validations/pagoMovil/index.js'
 
 // Helpers
-import { handleInput } from './../helpers/index.js'
+import { handleInput, getElapsedTime } from './../helpers/index.js'
 
 // Data
 import { banksData } from './../data/bank.js'
@@ -173,7 +173,7 @@ export default class HomeView extends View {
    *     inputElement: HTMLInputElement
    *   ) => void,
    *   isValidForm: () => boolean,
-   *   showDataInTable: (isFirstPagoMovil?: boolean) => void
+   *   showDataInTable: ({isFirstPagoMovil: boolean} = {isFirstPagoMovil: false}) => void
    * }}
    */
   get #actions() {
@@ -203,8 +203,12 @@ export default class HomeView extends View {
         await this.#components.showModalComponent(modal)
         mainElement.appendChild(modal.getElement)
 
-        modal.show(true)
-        modal.deleteOfDOM(mainElement, 'form[method="dialog"]')
+        modal.show()
+
+        modal.deleteOfDOM(mainElement, 'form[method="dialog"]', () => {
+          const datalistElement = document.querySelector('datalist#banks')
+          mainElement.removeChild(datalistElement)
+        })
 
         // ---------------------------------------------------------------------
 
@@ -443,11 +447,7 @@ export default class HomeView extends View {
           alias: data.alias.trim()
         })
 
-        const lastActivity = new Intl.DateTimeFormat('es-VE', {
-          minute: '2-digit'
-        }).format(new Date())
-
-        Store.set('last_activity', lastActivity)
+        Store.set('last_activity', new Date())
 
         Store.setPagoMovil({
           document: pagoMovil.getDocument,
@@ -461,14 +461,41 @@ export default class HomeView extends View {
         savedBtnElement.classList.add('btn__dark--disabled')
 
         form.reset()
-        this.showDataInTable(true)
+        this.showDataInTable({ isFirstPagoMovil: true })
+
+        const successModal = new Modal()
+
+        successModal.setHtml(/*html*/ `
+          <span><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Check_Big"><path id="Vector" d="M4 12L8.94975 16.9497L19.5572 6.34326" stroke="#c4caca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></g></g></svg></span>
+          <h3>¡Operación exitosa!</h3>
+
+          <form method="dialog" id="success__dialog" class="form form__dialog__buttons">
+            <button type="submit" class="btn btn__modal btn__dark">
+              Continuar
+            </button>
+          </form>
+        `)
+
+        form.appendChild(successModal.getElement)
+        successModal.show()
+
+        /** @type {HTMLButtonElement} */
+        const cancelBtn = document.querySelector('.btn__gray--outline')
+
+        successModal.deleteOfDOM(form, '#success__dialog', () => {
+          cancelBtn.click()
+        })
       },
 
       /**
-       * @param {boolean} [isFirstPagoMovil=false]
+       * @param {{isFirstPagoMovil: boolean}}
        * @return {void}
        */
-      showDataInTable(isFirstPagoMovil = false) {
+      showDataInTable(
+        { isFirstPagoMovil } = {
+          isFirstPagoMovil: false
+        }
+      ) {
         if (!Store.is('pago_movil')) return
 
         /**
@@ -516,7 +543,7 @@ export default class HomeView extends View {
             template += /*html*/ `
               <tr>
                 <td>${numberPhone.substring(0, 4)}***${numberPhone.substring(7, numberPhone.length)}</td>
-                <td>${bank.split(' - ')[1]}</td>
+                <td class="bank__td" title="${bank.split(' - ')[1]}">${bank.split(' - ')[1]}</td>
                 <td>${alias}</td>
                 <td>${document[0]}${document.length === 8 ? document[1] : ''}***${document.substring(document.length === 8 ? 5 : 4, document.length)}</td>
                 <td>${createdAt}</td>
@@ -558,16 +585,9 @@ export default class HomeView extends View {
     })
 
     // ------------------------------------------------------------------------
-    const welcomeMessageElement = document.getElementById('welcome__message')
-
-    const lastActionMessage = new Intl.RelativeTimeFormat('es-VE', {
-      numeric: 'auto'
-    })
-
     const ONE_SECOND = 1000
-
-    let currentTime = +new Date().toLocaleTimeString().split(':')[1]
-    let lastActivity = +Store.get('last_activity')
+    const welcomeMessageElement = document.getElementById('welcome__message')
+    let lastActivity = Date.parse(Store.get('last_activity'))
 
     welcomeMessageElement.innerHTML = /*html*/ `
       Bienvenido ${Store.get('name')} |
@@ -575,20 +595,13 @@ export default class HomeView extends View {
         !Store.is('last_activity') ?
           'No hay actividad reciente.'
         : /*html*/ `
-          <span>
-            Última actividad:
-            ${lastActionMessage.format(
-              -(currentTime - lastActivity),
-              'minutes'
-            )}.
-          </span>
+          <span>Última actividad: hace ${getElapsedTime(lastActivity)}.</span>
         `
       }
     `
 
     setInterval(() => {
-      currentTime = +new Date().toLocaleTimeString().split(':')[1]
-      lastActivity = +Store.get('last_activity')
+      lastActivity = Date.parse(Store.get('last_activity'))
 
       welcomeMessageElement.innerHTML = /*html*/ `
       Bienvenido ${Store.get('name')} |
@@ -596,10 +609,7 @@ export default class HomeView extends View {
         !Store.is('last_activity') ?
           'No hay actividad reciente.'
         : /*html*/ `
-          <span>
-            Última actividad:
-            ${lastActionMessage.format(-(currentTime - lastActivity), 'minutes')}.
-          </span>
+          <span>Última actividad: hace ${getElapsedTime(lastActivity)}.</span>
         `
       }
     `

@@ -3,7 +3,8 @@
 import Component from './../common/component.js'
 
 /**
- * @class Loader (span)
+ * ## Loader (span)
+ * @class
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class Loader extends Component {

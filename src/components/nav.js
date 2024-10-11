@@ -6,7 +6,8 @@ import Component from './../common/component.js'
 import { navTitle, navLinksData } from './../data/nav.js'
 
 /**
- * @class Nav (nav)
+ * ## Nav (nav)
+ * @class
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class Nav extends Component {

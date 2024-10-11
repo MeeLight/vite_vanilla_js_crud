@@ -3,7 +3,8 @@
 import Component from './../common/component.js'
 
 /**
- * @class Modal (dialog)
+ * ## Modal (dialog)
+ * @class
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class Modal extends Component {

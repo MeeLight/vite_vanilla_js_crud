@@ -6,7 +6,8 @@ import Component from './../common/component.js'
 // import { navTitle, navLinksData } from './../data/nav.js'
 
 /**
- * @class Form (form)
+ * ## Form (form)
+ * @class
  * @author Moises Reyes - [Github](https://github.com/MeeLight)
  */
 export default class Form extends Component {
