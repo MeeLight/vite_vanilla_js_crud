@@ -19,26 +19,22 @@ function main() {
   const router = new Router()
   const isUser = localStorage.getItem('pay2m_name') !== null
 
-  if (!isUser) router.showIndexView()
-  else router.showLoaderView()
+  if (!isUser) {
+    router.showIndexView()
+    return
+  }
+
+  router.showLoaderView()
 
   // Preload Styles - Dev Mode
   // document.head.lastElementChild.setAttribute('rel', 'preload')
 
-  /** @return {void} */
   const app = () => {
-    if (isUser) {
-      router.removeView(1)
-      router.showHomeView()
-    }
+    router.removeView(1)
+    router.showHomeView()
   }
 
-  if (isUser) {
-    setTimeout(() => app(), RANDOM_MILLISECONDS)
-    return
-  }
-
-  app()
+  setTimeout(() => app(), RANDOM_MILLISECONDS)
 }
 
 // Run
